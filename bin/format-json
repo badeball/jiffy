@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'json_better_formatter'
+
+file = ARGV.first
+
+raise 'No file given!' unless file
+raise 'Inexisting file given!' unless File.exists?(file)
+
+JsonBetterFormatter.new(in: file).format

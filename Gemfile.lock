@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    json_better_formatter (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.3.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json_better_formatter!
+  minitest
