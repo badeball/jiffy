@@ -12,4 +12,6 @@ begin
 rescue JsonBetterFormatter::UnparseableError => e
   $stderr.puts e
   exit! 1
+rescue Errno::EPIPE
+  # Do nothing
 end
