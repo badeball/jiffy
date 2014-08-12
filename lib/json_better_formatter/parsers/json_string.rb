@@ -260,6 +260,8 @@ when 1 then
           o.output data.range(t_p...p).pack('c*')
 
           p + 1
+        else
+          raise_unparseable p
         end
       end
     end

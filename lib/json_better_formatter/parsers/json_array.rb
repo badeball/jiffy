@@ -295,7 +295,11 @@ when 4 then
 
 # line 36 "json_array.rl"
 
-        p + 1 if cs >= json_array_first_final
+        if cs >= json_array_first_final
+          p + 1
+        else
+          raise_unparseable p
+        end
       end
     end
   end

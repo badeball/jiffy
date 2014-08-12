@@ -380,7 +380,11 @@ when 11 then
 
 # line 71 "json_value.rl"
 
-        p if cs >= json_value_first_final
+        if cs >= json_value_first_final
+          p
+        else
+          raise_unparseable pc
+        end
       end
     end
   end

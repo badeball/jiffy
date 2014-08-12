@@ -47,7 +47,11 @@ class JsonBetterFormatter
         %% write init;
         %% write exec;
 
-        p + 1 if cs >= json_object_first_final
+        if cs >= json_object_first_final
+          p + 1
+        else
+          raise_unparseable p
+        end
       end
     end
   end

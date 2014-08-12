@@ -275,9 +275,7 @@ when 1 then
 
 # line 40 "json.rl"
 
-        unless p == pe
-          puts "Unexpected token at '#{[data[p]].pack("c*")}'"
-        end
+        raise_unparseable p unless p == pe
       end
     end
   end

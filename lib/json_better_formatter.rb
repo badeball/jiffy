@@ -11,6 +11,8 @@ require 'json_better_formatter/json_outputter'
 class JsonBetterFormatter
   VERSION = '0.0.1'
 
+  class UnparseableError < StandardError; end
+
   class << self
     attr_accessor :json_start
   end
@@ -40,5 +42,11 @@ class JsonBetterFormatter
 
     self.eof = data.length
     self.outputter = JsonOutputter.new(options)
+  end
+
+  private
+
+  def raise_unparseable(p)
+    raise UnparseableError.new("Unexpected token at '#{[data[p]].pack("c*")}'")
   end
 end
