@@ -9,7 +9,7 @@ require 'json_better_formatter/array_mimicking_io'
 require 'json_better_formatter/json_outputter'
 
 class JsonBetterFormatter
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 
   class UnparseableError < StandardError; end
 
