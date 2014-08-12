@@ -7,4 +7,9 @@ file = ARGV.first
 raise 'No file given!' unless file
 raise 'Inexisting file given!' unless File.exists?(file)
 
-JsonBetterFormatter.new(in: file).format
+begin
+  JsonBetterFormatter.new(in: file).format
+rescue JsonBetterFormatter::UnparseableError => e
+  $stderr.puts e
+  exit! 1
+end
