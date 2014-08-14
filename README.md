@@ -96,6 +96,10 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 0.0.6
+
+* Correcting an issue where a file was missing from the gemspec.
+
 ### 0.0.5
 
 * Adding a command line option to show the version number.
