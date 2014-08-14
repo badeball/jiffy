@@ -37,6 +37,7 @@ class JsonBetterFormatter
       self.data = ArrayMimickingIO.new(File.open(options[:in]))
     elsif options[:in].is_a?(IO)
       self.data = ArrayMimickingIO.new(options[:in])
+    else
       raise 'A valid input source must be present!'
     end
 

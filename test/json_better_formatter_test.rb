@@ -16,4 +16,14 @@ describe JsonBetterFormatter do
       assert_equal(out.string, File.read(example).strip)
     end
   end
+
+  describe '#initialize' do
+    it 'should raise an error when :in is neither an instance of Strirng nor IO' do
+      class Foo; end
+
+      assert_raises RuntimeError do
+        JsonBetterFormatter.new(in: Foo.new)
+      end
+    end
+  end
 end
