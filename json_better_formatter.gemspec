@@ -1,6 +1,8 @@
+require File.join(File.dirname(__FILE__), 'lib', 'json_better_formatter', 'version')
+
 Gem::Specification.new do |s|
   s.name        = 'json_better_formatter'
-  s.version     = '0.0.3'
+  s.version     = JsonBetterFormatter::VERSION
   s.license     = 'MIT'
   s.date        = '2014-08-12'
 
