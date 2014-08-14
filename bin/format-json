@@ -2,12 +2,18 @@
 
 require 'optparse'
 require 'json_better_formatter'
+require 'json_better_formatter/version'
 
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: format-json [options] FILE"
 
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
+    exit
+  end
+
+  opts.on_tail("-v", "--version", "Print the version number of format-json") do
+    puts "format-json #{JsonBetterFormatter::VERSION}"
     exit
   end
 end
