@@ -96,6 +96,10 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 0.0.5
+
+* Adding a command line option to show the version number.
+
 ### 0.0.4
 
 * Fixing an issue where using an IO object as input source would always raise
