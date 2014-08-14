@@ -93,3 +93,18 @@ Tested against the following Ruby versions.
 * 2.1.0
 * 2.1.1
 * 2.1.2
+
+## Changelog
+
+### 0.0.3
+
+* Added install instructions to the README.
+* #2: Added command line help text to the executable.
+
+### 0.0.2
+
+* #1: The executable now handles closed pipes.
+
+### 0.0.1
+
+* Initial work on the project.
