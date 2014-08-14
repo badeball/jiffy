@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     lib/json_better_formatter/parsers/json_value.rl
     lib/json_better_formatter/array_mimicking_io.rb
     lib/json_better_formatter/json_outputter.rb
+    lib/json_better_formatter/version.rb
     lib/json_better_formatter.rb
     test/examples/colors.json
     test/examples/facebook.json
