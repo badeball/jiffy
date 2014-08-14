@@ -96,6 +96,11 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 0.0.4
+
+* Fixing an issue where using an IO object as input source would always raise
+  an error.
+
 ### 0.0.3
 
 * Added install instructions to the README.

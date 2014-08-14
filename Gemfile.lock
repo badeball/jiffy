@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    json_better_formatter (0.0.3)
+    json_better_formatter (0.0.4)
 
 GEM
   remote: https://rubygems.org/
