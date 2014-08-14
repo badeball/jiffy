@@ -9,8 +9,6 @@ require 'json_better_formatter/array_mimicking_io'
 require 'json_better_formatter/json_outputter'
 
 class JsonBetterFormatter
-  VERSION = '0.0.3'
-
   class UnparseableError < StandardError; end
   class InvalidInputSource < StandardError; end
 
