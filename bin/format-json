@@ -1,17 +1,31 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'json_better_formatter'
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: format-json [options] FILE"
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+end
+
+opts.parse!
 
 file = ARGV.first
 
-raise 'No file given!' unless file
-raise 'Inexisting file given!' unless File.exists?(file)
-
-begin
-  JsonBetterFormatter.new(in: file).format
-rescue JsonBetterFormatter::UnparseableError => e
-  $stderr.puts e
+if file.nil? || !File.exists?(file)
+  puts opts
   exit! 1
-rescue Errno::EPIPE
-  # Do nothing
+else
+  begin
+    JsonBetterFormatter.new(in: file).format
+  rescue JsonBetterFormatter::UnparseableError => e
+    $stderr.puts e
+    exit! 1
+  rescue Errno::EPIPE
+    # Do nothing
+  end
 end
