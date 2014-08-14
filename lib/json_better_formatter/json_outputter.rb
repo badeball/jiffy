@@ -4,6 +4,11 @@ class JsonBetterFormatter
 
     def initialize(options)
       self.out = options[:out] || $stdout
+
+      unless out.respond_to? :print
+        raise 'A valid output source must be present!'
+      end
+
       self.indent = 0
     end
 

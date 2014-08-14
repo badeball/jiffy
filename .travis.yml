@@ -4,4 +4,6 @@ rvm:
   - 2.1.0
   - 2.1.1
   - 2.1.2
-script: bundle exec ruby ./test/json_better_formatter_test.rb
+script:
+  - bundle exec ruby ./test/json_better_formatter_test.rb
+  - bundle exec ruby ./test/jsosn_outputter_test.rb
