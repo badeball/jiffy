@@ -44,6 +44,10 @@ class JsonBetterFormatter
   private
 
   def raise_unparseable(p)
-    raise UnparseableError.new("Unexpected token at '#{[data[p]].pack("c*")}'")
+    if p == eof
+      raise UnparseableError.new('Unexpected end of input')
+    else
+      raise UnparseableError.new("Unexpected token at '#{[data[p]].pack("c*")}'")
+    end
   end
 end
