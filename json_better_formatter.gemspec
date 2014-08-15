@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
 
   s.authors     = ['Jonas Amundsen']
   s.email       = ['jonasba+gem@gmail.com']
+  s.homepage    = 'https://github.com/badeball/json_better_formatter'
 
   s.executables = 'format-json'
 
