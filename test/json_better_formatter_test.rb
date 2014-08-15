@@ -5,15 +5,27 @@ require 'minitest/autorun'
 require 'json_better_formatter'
 
 describe JsonBetterFormatter do
-  examples_files = Dir[File.join(File.dirname(__FILE__), 'examples', '*')]
+  positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
 
-  examples_files.each do |example|
+  positive_examples.each do |example|
     it "should correctly format #{File.basename(example)}" do
       out = StringIO.new
 
       JsonBetterFormatter.new(in: example, out: out).format
 
       assert_equal(out.string, File.read(example).strip)
+    end
+  end
+
+  negative_examples = Dir[File.join(File.dirname(__FILE__), 'negative-examples', '*')]
+
+  negative_examples.each do |example|
+    it "should not format #{File.basename(example)}" do
+      out = StringIO.new
+
+      assert_raises JsonBetterFormatter::UnparseableError do
+        JsonBetterFormatter.new(in: example, out: out).format
+      end
     end
   end
 

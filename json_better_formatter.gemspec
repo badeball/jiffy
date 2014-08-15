@@ -35,21 +35,38 @@ Gem::Specification.new do |s|
     lib/json_better_formatter/json_outputter.rb
     lib/json_better_formatter/version.rb
     lib/json_better_formatter.rb
-    test/examples/array-as-root.json
-    test/examples/array-nested-inside-array.json
-    test/examples/array-nested-inside-object.json
-    test/examples/false-value.json
-    test/examples/float.json
-    test/examples/integer.json
-    test/examples/negative-float.json
-    test/examples/negative-integer.json
-    test/examples/null-value.json
-    test/examples/object-as-root.json
-    test/examples/object-nested-inside-array.json
-    test/examples/object-nested-inside-object.json
-    test/examples/seperated-array-values.json
-    test/examples/seperated-object-properties.json
-    test/examples/true-value.json
+    test/negative-examples/hexadecimal.json
+    test/negative-examples/infinity-value.json
+    test/negative-examples/leading-comma.json
+    test/negative-examples/leading-zero.json
+    test/negative-examples/line-break.json
+    test/negative-examples/missing-colon.json
+    test/negative-examples/nan-value,json
+    test/negative-examples/positive-float.json
+    test/negative-examples/positive-integer.json
+    test/negative-examples/single-quote.json
+    test/negative-examples/string-as-root.json
+    test/negative-examples/tab-character.json
+    test/negative-examples/trailing-array-seperator.json
+    test/negative-examples/trailing-object-seperator.json
+    test/negative-examples/true-as-root.json
+    test/negative-examples/unclosed-array.json
+    test/negative-examples/unclosed-object.json
+    test/positive-examples/array-as-root.json
+    test/positive-examples/array-nested-inside-array.json
+    test/positive-examples/array-nested-inside-object.json
+    test/positive-examples/false-value.json
+    test/positive-examples/float.json
+    test/positive-examples/integer.json
+    test/positive-examples/negative-float.json
+    test/positive-examples/negative-integer.json
+    test/positive-examples/null-value.json
+    test/positive-examples/object-as-root.json
+    test/positive-examples/object-nested-inside-array.json
+    test/positive-examples/object-nested-inside-object.json
+    test/positive-examples/seperated-array-values.json
+    test/positive-examples/seperated-object-properties.json
+    test/positive-examples/true-value.json
     test/json_better_formatter_test.rb
     Gemfile
     Gemfile.lock
