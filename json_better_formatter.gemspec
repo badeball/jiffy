@@ -35,10 +35,21 @@ Gem::Specification.new do |s|
     lib/json_better_formatter/json_outputter.rb
     lib/json_better_formatter/version.rb
     lib/json_better_formatter.rb
-    test/examples/colors.json
-    test/examples/facebook.json
-    test/examples/flickr.json
-    test/examples/youtube.json
+    test/examples/array-as-root.json
+    test/examples/array-nested-inside-array.json
+    test/examples/array-nested-inside-object.json
+    test/examples/false-value.json
+    test/examples/float.json
+    test/examples/integer.json
+    test/examples/negative-float.json
+    test/examples/negative-integer.json
+    test/examples/null-value.json
+    test/examples/object-as-root.json
+    test/examples/object-nested-inside-array.json
+    test/examples/object-nested-inside-object.json
+    test/examples/seperated-array-values.json
+    test/examples/seperated-object-properties.json
+    test/examples/true-value.json
     test/json_better_formatter_test.rb
     Gemfile
     Gemfile.lock
