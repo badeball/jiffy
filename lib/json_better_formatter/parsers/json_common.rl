@@ -13,9 +13,6 @@
     Vnull            = 'null';
     Vfalse           = 'false';
     Vtrue            = 'true';
-    VNaN             = 'NaN';
-    VInfinity        = 'Infinity';
-    VMinusInfinity   = '-Infinity';
     begin_value      = [nft\"\-\[\{NI] | digit;
     begin_object     = '{';
     end_object       = '}';

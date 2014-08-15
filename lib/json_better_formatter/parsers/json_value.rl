@@ -48,8 +48,6 @@
         Vnull >{ o.t :null } |
         Vfalse >{ o.t :false } |
         Vtrue >{ o.t :true } |
-        VNaN >{ o.t :nan } |
-        VInfinity >{ o.t :inf } |
         begin_number >parse_number |
         begin_string >{ o.t :begin_string } >parse_string @{ o.t :end_string } |
         begin_array >parse_array |
