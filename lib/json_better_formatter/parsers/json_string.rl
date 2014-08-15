@@ -2,13 +2,9 @@
     machine json_string;
     include json_common "json_common.rl";
 
-    action parse_string {
-      fexec p + 1;
-    }
-
     action exit { fhold; fbreak; }
 
-    main := '"' ((^([\"\\] | 0..0x1f) | '\\'[\"\\/bfnrt] | '\\u'[0-9a-fA-F]{4} | '\\'^([\"\\/bfnrtu]|0..0x1f))* %parse_string) '"' @exit;
+    main := '"' ((^([\"\\] | 0..0x1f) | '\\'[\"\\/bfnrt] | '\\u'[0-9a-fA-F]{4} | '\\'^([\"\\/bfnrtu]|0..0x1f))*) '"' @exit;
 }%%
 
 class JsonBetterFormatter

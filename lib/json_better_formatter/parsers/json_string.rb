@@ -1,7 +1,7 @@
 
 # line 1 "json_string.rl"
 
-# line 12 "json_string.rl"
+# line 8 "json_string.rl"
 
 
 class JsonBetterFormatter
@@ -15,7 +15,7 @@ class << self
 	private :_json_string_actions, :_json_string_actions=
 end
 self._json_string_actions = [
-	0, 2, 0, 1
+	0, 1, 0
 ]
 
 class << self
@@ -112,7 +112,7 @@ end
 self.json_string_en_main = 1;
 
 
-# line 19 "json_string.rl"
+# line 15 "json_string.rl"
         super
       end
 
@@ -127,7 +127,7 @@ begin
 	cs = json_string_start
 end
 
-# line 26 "json_string.rl"
+# line 22 "json_string.rl"
         
 # line 133 "json_string.rb"
 begin
@@ -213,13 +213,6 @@ begin
 when 0 then
 # line 5 "json_string.rl"
 		begin
-
-       begin p = (( p + 1))-1; end
-
-    		end
-when 1 then
-# line 9 "json_string.rl"
-		begin
  p = p - 1; 	begin
 		p += 1
 		_trigger_goto = true
@@ -227,7 +220,7 @@ when 1 then
 		break
 	end
  		end
-# line 231 "json_string.rb"
+# line 224 "json_string.rb"
 			end # action switch
 		end
 	end
@@ -254,7 +247,7 @@ when 1 then
 	end
 	end
 
-# line 27 "json_string.rl"
+# line 23 "json_string.rl"
 
         if cs >= json_string_first_final
           o.output data.range(t_p...p).pack('c*')
