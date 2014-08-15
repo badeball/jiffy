@@ -96,6 +96,13 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.0.0
+
+* ArgumentError is raised instead of custom error classes for each argument.
+* Fixing an issue where unparseable values would raise NameError and not UnparseableError.
+* Unexpected end of input is now properly handled and an UnparseableError is raised.
+* Removing parsing of NaN and Infinity.
+
 ### 0.0.6
 
 * Correcting an issue where a file was missing from the gemspec.

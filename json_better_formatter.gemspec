@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name        = 'json_better_formatter'
   s.version     = JsonBetterFormatter::VERSION
   s.license     = 'MIT'
-  s.date        = '2014-08-14'
+  s.date        = '2014-08-15'
 
   s.summary     = 'A streaming-based JSON formatter in Ruby.'
   s.description = 'JsonBetterFormatter utilizes Ragel in order to parse and continuously format JSON data. This allows it to achieve a constant memory usage, independent of the input size.'
