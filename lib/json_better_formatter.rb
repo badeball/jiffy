@@ -29,8 +29,6 @@ class JsonBetterFormatter
   alias_method :format, :parse_json
 
   def initialize(options = {})
-    raises 'An input source must be present!' unless options[:in]
-
     if options[:in].is_a?(String)
       self.data = ArrayMimickingIO.new(File.open(options[:in]))
     elsif options[:in].is_a?(IO)
