@@ -21,7 +21,7 @@ describe JsonBetterFormatter do
     it 'should raise an error when :in is neither an instance of Strirng nor IO' do
       class Foo; end
 
-      assert_raises JsonBetterFormatter::InvalidInputSource do
+      assert_raises ArgumentError do
         JsonBetterFormatter.new(in: Foo.new)
       end
     end

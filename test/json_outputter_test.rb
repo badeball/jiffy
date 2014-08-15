@@ -16,7 +16,7 @@ describe JsonBetterFormatter::JsonOutputter do
         end
       end
 
-      assert_raises JsonBetterFormatter::JsonOutputter::InvalidOutputSource do
+      assert_raises ArgumentError do
         JsonBetterFormatter::JsonOutputter.new out: out
       end
     end

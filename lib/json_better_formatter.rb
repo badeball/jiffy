@@ -10,7 +10,6 @@ require 'json_better_formatter/json_outputter'
 
 class JsonBetterFormatter
   class UnparseableError < StandardError; end
-  class InvalidInputSource < StandardError; end
 
   class << self
     attr_accessor :json_start
@@ -37,7 +36,7 @@ class JsonBetterFormatter
     elsif options[:in].is_a?(IO)
       self.data = ArrayMimickingIO.new(options[:in])
     else
-      raise InvalidInputSource
+      raise ArgumentError, 'Invalid input source'
     end
 
     self.eof = data.length

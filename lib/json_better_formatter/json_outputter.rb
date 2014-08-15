@@ -1,13 +1,11 @@
 class JsonBetterFormatter
   class JsonOutputter
-    class InvalidOutputSource < StandardError; end
-
     attr_accessor :out, :indent
 
     def initialize(options)
       self.out = options[:out] || $stdout
 
-      raise InvalidOutputSource unless out.respond_to? :print
+      raise ArgumentError, 'Invalid output source' unless out.respond_to? :print
 
       self.indent = 0
     end
