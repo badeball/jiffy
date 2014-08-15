@@ -72,7 +72,7 @@ class JsonBetterFormatter
         if cs >= json_value_first_final
           p
         else
-          raise_unparseable pc
+          raise_unparseable p
         end
       end
     end
