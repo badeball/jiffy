@@ -54,11 +54,27 @@ Gem::Specification.new do |s|
     test/positive-examples/array-nested-inside-array.json
     test/positive-examples/array-nested-inside-object.json
     test/positive-examples/false-value.json
-    test/positive-examples/float.json
-    test/positive-examples/integer.json
-    test/positive-examples/negative-float.json
-    test/positive-examples/negative-integer.json
     test/positive-examples/null-value.json
+    test/positive-examples/number-1.json
+    test/positive-examples/number-10.json
+    test/positive-examples/number-11.json
+    test/positive-examples/number-12.json
+    test/positive-examples/number-13.json
+    test/positive-examples/number-14.json
+    test/positive-examples/number-15.json
+    test/positive-examples/number-16.json
+    test/positive-examples/number-17.json
+    test/positive-examples/number-18.json
+    test/positive-examples/number-19.json
+    test/positive-examples/number-2.json
+    test/positive-examples/number-20.json
+    test/positive-examples/number-3.json
+    test/positive-examples/number-4.json
+    test/positive-examples/number-5.json
+    test/positive-examples/number-6.json
+    test/positive-examples/number-7.json
+    test/positive-examples/number-8.json
+    test/positive-examples/number-9.json
     test/positive-examples/object-as-root.json
     test/positive-examples/object-nested-inside-array.json
     test/positive-examples/object-nested-inside-object.json
