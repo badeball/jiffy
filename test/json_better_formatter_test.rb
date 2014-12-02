@@ -23,7 +23,13 @@ describe JsonBetterFormatter do
     it "should not format #{File.basename(example)}" do
       out = StringIO.new
 
-      assert_raises JsonBetterFormatter::UnparseableError do
+      expected_exception = if /unclosed/ =~ example
+                             JsonBetterFormatter::UnexpectedEndError
+                           else
+                             JsonBetterFormatter::UnparseableError
+                           end
+
+      assert_raises expected_exception do
         JsonBetterFormatter.new(in: example, out: out).format
       end
     end

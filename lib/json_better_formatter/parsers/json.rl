@@ -35,8 +35,19 @@ class JsonBetterFormatter
       end
 
       def parse_json
+        pe = :ignored
+        eof = :ignored
+        leftover = []
+
         %% write init;
-        %% write exec;
+
+        while chunk = io.read(1_000_000)
+          self.data = leftover + chunk.unpack("c*")
+          p ||= 0
+          pe = data.length
+
+          %% write exec;
+        end
 
         raise_unparseable p unless p == pe
       end

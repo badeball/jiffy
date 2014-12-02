@@ -8,7 +8,7 @@
       if np
         fexec np;
       else
-        fhold; fbreak;
+        raise_unparseable p
       end
     }
 
@@ -18,7 +18,7 @@
       if np
         fexec np;
       else
-        fhold; fbreak;
+        raise_unparseable p
       end
     }
 
@@ -28,7 +28,7 @@
       if np
         fexec np;
       else
-        fhold; fbreak;
+        raise_unparseable p
       end
     }
 
@@ -38,7 +38,7 @@
       if np
         fexec np;
       else
-        fhold; fbreak;
+        raise_unparseable p
       end
     }
 

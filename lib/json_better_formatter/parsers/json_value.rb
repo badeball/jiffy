@@ -244,13 +244,7 @@ when 0 then
          begin p = (( np))-1; end
 
       else
-        p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
+        raise_unparseable p
       end
     		end
 when 1 then
@@ -263,13 +257,7 @@ when 1 then
          begin p = (( np))-1; end
 
       else
-        p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
+        raise_unparseable p
       end
     		end
 when 2 then
@@ -282,13 +270,7 @@ when 2 then
          begin p = (( np))-1; end
 
       else
-        p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
+        raise_unparseable p
       end
     		end
 when 3 then
@@ -301,13 +283,7 @@ when 3 then
          begin p = (( np))-1; end
 
       else
-        p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
+        raise_unparseable p
       end
     		end
 when 5 then
@@ -330,7 +306,7 @@ when 9 then
 # line 52 "json_value.rl"
 		begin
  o.t :end_string 		end
-# line 334 "json_value.rb"
+# line 310 "json_value.rb"
 			end # action switch
 		end
 	end

@@ -79,10 +79,15 @@ JsonBetterFormatter.new(in: 'some.json', out: out).format
 ### Command line usage
 
 With this tool, one can immediately get a sense of the JSON-structure of a file
-of any size.
+of any size. The executable can read from a file specified as an argument or
+read from standard input.
 
 ```
 $ format-json incredibly-large.json | less
+```
+
+```
+$ cat incredibly-large.json | format-json | less
 ```
 
 ## Compatibility
