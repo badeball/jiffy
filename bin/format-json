@@ -22,6 +22,16 @@ end
 
 opts.parse!
 
+Signal.trap("INT") do
+  puts "Aborted"
+  exit 1
+end
+
+Signal.trap("TERM") do
+  puts "Aborted"
+  exit 1
+end
+
 begin
   if ARGV.empty?
     JsonBetterFormatter.new(in: STDIN).format
