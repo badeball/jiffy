@@ -1,7 +1,7 @@
 
 # line 1 "json_string.rl"
 
-# line 8 "json_string.rl"
+# line 17 "json_string.rl"
 
 
 class JsonBetterFormatter
@@ -15,7 +15,7 @@ class << self
 	private :_json_string_actions, :_json_string_actions=
 end
 self._json_string_actions = [
-	0, 1, 0
+	0, 1, 0, 1, 1
 ]
 
 class << self
@@ -23,8 +23,8 @@ class << self
 	private :_json_string_key_offsets, :_json_string_key_offsets=
 end
 self._json_string_key_offsets = [
-	0, 0, 1, 5, 8, 14, 20, 26, 
-	32
+	0, 0, 1, 5, 14, 20, 26, 32, 
+	38
 ]
 
 class << self
@@ -32,11 +32,11 @@ class << self
 	private :_json_string_trans_keys, :_json_string_trans_keys=
 end
 self._json_string_trans_keys = [
-	34, 34, 92, 0, 31, 117, 0, 31, 
-	48, 57, 65, 70, 97, 102, 48, 57, 
+	34, 34, 92, 0, 31, 34, 47, 92, 
+	98, 102, 110, 114, 116, 117, 48, 57, 
 	65, 70, 97, 102, 48, 57, 65, 70, 
 	97, 102, 48, 57, 65, 70, 97, 102, 
-	0
+	48, 57, 65, 70, 97, 102, 0
 ]
 
 class << self
@@ -44,7 +44,7 @@ class << self
 	private :_json_string_single_lengths, :_json_string_single_lengths=
 end
 self._json_string_single_lengths = [
-	0, 1, 2, 1, 0, 0, 0, 0, 
+	0, 1, 2, 9, 0, 0, 0, 0, 
 	0
 ]
 
@@ -53,7 +53,7 @@ class << self
 	private :_json_string_range_lengths, :_json_string_range_lengths=
 end
 self._json_string_range_lengths = [
-	0, 0, 1, 1, 3, 3, 3, 3, 
+	0, 0, 1, 0, 3, 3, 3, 3, 
 	0
 ]
 
@@ -62,8 +62,8 @@ class << self
 	private :_json_string_index_offsets, :_json_string_index_offsets=
 end
 self._json_string_index_offsets = [
-	0, 0, 2, 6, 9, 13, 17, 21, 
-	25
+	0, 0, 2, 6, 16, 20, 24, 28, 
+	32
 ]
 
 class << self
@@ -71,10 +71,11 @@ class << self
 	private :_json_string_indicies, :_json_string_indicies=
 end
 self._json_string_indicies = [
-	0, 1, 2, 3, 1, 0, 4, 1, 
-	0, 5, 5, 5, 1, 6, 6, 6, 
-	1, 7, 7, 7, 1, 0, 0, 0, 
-	1, 1, 0
+	0, 1, 3, 4, 1, 2, 2, 2, 
+	2, 2, 2, 2, 2, 2, 5, 1, 
+	6, 6, 6, 1, 7, 7, 7, 1, 
+	8, 8, 8, 1, 2, 2, 2, 1, 
+	1, 0
 ]
 
 class << self
@@ -82,7 +83,8 @@ class << self
 	private :_json_string_trans_targs, :_json_string_trans_targs=
 end
 self._json_string_trans_targs = [
-	2, 0, 8, 3, 4, 5, 6, 7
+	2, 0, 2, 8, 3, 4, 5, 6, 
+	7
 ]
 
 class << self
@@ -90,7 +92,8 @@ class << self
 	private :_json_string_trans_actions, :_json_string_trans_actions=
 end
 self._json_string_trans_actions = [
-	0, 0, 1, 0, 0, 0, 0, 0
+	0, 0, 3, 1, 3, 3, 3, 3, 
+	3
 ]
 
 class << self
@@ -112,7 +115,7 @@ end
 self.json_string_en_main = 1;
 
 
-# line 15 "json_string.rl"
+# line 24 "json_string.rl"
         super
       end
 
@@ -120,16 +123,16 @@ self.json_string_en_main = 1;
         t_p = p + 1
 
         
-# line 124 "json_string.rb"
+# line 127 "json_string.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_string_start
 end
 
-# line 22 "json_string.rl"
+# line 31 "json_string.rl"
         
-# line 133 "json_string.rb"
+# line 136 "json_string.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -220,7 +223,11 @@ when 0 then
 		break
 	end
  		end
-# line 224 "json_string.rb"
+when 1 then
+# line 7 "json_string.rl"
+		begin
+ o.t :char, [data[p]].pack("c*") 		end
+# line 231 "json_string.rb"
 			end # action switch
 		end
 	end
@@ -247,11 +254,9 @@ when 0 then
 	end
 	end
 
-# line 23 "json_string.rl"
+# line 32 "json_string.rl"
 
         if cs >= json_string_first_final
-          o.output data.range(t_p...p).pack('c*')
-
           p + 1
         else
           raise_unparseable p

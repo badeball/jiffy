@@ -4,7 +4,16 @@
 
     action exit { fhold; fbreak; }
 
-    main := '"' ((^([\"\\] | 0..0x1f) | '\\'[\"\\/bfnrt] | '\\u'[0-9a-fA-F]{4} | '\\'^([\"\\/bfnrtu]|0..0x1f))*) '"' @exit;
+    action char { o.t :char, [data[p]].pack("c*") }
+
+    character = ^([\"\\] | 0..0x1f) >char;
+    sequence = '\\' >char [\"\\/bfnrt] >char;
+    unicode = '\\' >char 'u' >char [0-9a-fA-F]{4} $char;
+
+    main := '"' (
+                  character | sequence | unicode
+                )*
+            '"' @exit;
 }%%
 
 class JsonBetterFormatter
@@ -22,8 +31,6 @@ class JsonBetterFormatter
         %% write exec;
 
         if cs >= json_string_first_final
-          o.output data.range(t_p...p).pack('c*')
-
           p + 1
         else
           raise_unparseable p
