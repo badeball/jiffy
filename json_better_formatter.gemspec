@@ -65,6 +65,16 @@ Gem::Specification.new do |s|
     test/positive-examples/object-nested-inside-object.json
     test/positive-examples/seperated-array-values.json
     test/positive-examples/seperated-object-properties.json
+    test/positive-examples/string-backspace.json
+    test/positive-examples/string-carriage-return.json
+    test/positive-examples/string-formfeed.json
+    test/positive-examples/string-horizontal-tab.json
+    test/positive-examples/string-newline.json
+    test/positive-examples/string-quotation.json
+    test/positive-examples/string-reverse-solidus.json
+    test/positive-examples/string-solidus.json
+    test/positive-examples/string-trivial.json
+    test/positive-examples/string-unicode.json
     test/positive-examples/true-value.json
     test/json_better_formatter_test.rb
     Gemfile
