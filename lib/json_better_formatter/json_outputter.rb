@@ -10,7 +10,7 @@ class JsonBetterFormatter
       self.indent = 0
     end
 
-    def process_token(token)
+    def process_token(token, payload = nil)
       case token
         when :begin_object
           output '{', indent: 1, newline_after: true
@@ -36,6 +36,10 @@ class JsonBetterFormatter
           output 'true'
         when :false
           output 'false'
+        when :char
+          output payload
+        when :number
+          output payload.to_s
         else
           puts "Unknown token: #{token.inspect}"
       end

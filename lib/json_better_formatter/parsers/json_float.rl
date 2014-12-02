@@ -4,10 +4,14 @@
 
     action exit { fhold; fbreak; }
 
-    main := '-'? (
-              (('0' | [1-9][0-9]*) '.' [0-9]+ ([Ee] [+\-]?[0-9]+)?)
-              | (('0' | [1-9][0-9]*) ([Ee] [+\-]?[0-9]+))
-             )  (^[0-9Ee.\-]? @exit );
+    action char { o.t :char, [data[p]].pack("c*") }
+    action number { o.t :number, [data[p]].pack("c*").to_i }
+
+    significand = '-'? @char ('0' >number | [1-9] >char [0-9]* $number) ('.' >char [0-9]+ $number)?;
+
+    exponent = [Ee] >char [+\-]? @char [0-9]+ $number;
+
+    main := (significand exponent?) (^[0-9Ee.\-]? @exit );
 }%%
 
 class JsonBetterFormatter
@@ -25,8 +29,6 @@ class JsonBetterFormatter
         %% write exec;
 
         if cs >= json_float_first_final
-          o.output data.range(t_p...p).pack('c*')
-
           p
         end
       end

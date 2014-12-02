@@ -1,7 +1,7 @@
 
 # line 1 "json_float.rl"
 
-# line 11 "json_float.rl"
+# line 15 "json_float.rl"
 
 
 class JsonBetterFormatter
@@ -15,7 +15,7 @@ class << self
 	private :_json_float_actions, :_json_float_actions=
 end
 self._json_float_actions = [
-	0, 1, 0
+	0, 1, 0, 1, 1, 1, 2
 ]
 
 class << self
@@ -23,8 +23,8 @@ class << self
 	private :_json_float_key_offsets, :_json_float_key_offsets=
 end
 self._json_float_key_offsets = [
-	0, 0, 4, 7, 10, 12, 16, 18, 
-	23, 29, 29
+	0, 0, 4, 7, 9, 13, 15, 21, 
+	21, 27, 33
 ]
 
 class << self
@@ -32,11 +32,11 @@ class << self
 	private :_json_float_trans_keys, :_json_float_trans_keys=
 end
 self._json_float_trans_keys = [
-	45, 48, 49, 57, 48, 49, 57, 46, 
-	69, 101, 48, 57, 43, 45, 48, 57, 
-	48, 57, 46, 69, 101, 48, 57, 69, 
-	101, 45, 46, 48, 57, 69, 101, 45, 
-	46, 48, 57, 0
+	45, 48, 49, 57, 48, 49, 57, 48, 
+	57, 43, 45, 48, 57, 48, 57, 45, 
+	46, 69, 101, 48, 57, 69, 101, 45, 
+	46, 48, 57, 69, 101, 45, 46, 48, 
+	57, 45, 46, 69, 101, 48, 57, 0
 ]
 
 class << self
@@ -44,8 +44,8 @@ class << self
 	private :_json_float_single_lengths, :_json_float_single_lengths=
 end
 self._json_float_single_lengths = [
-	0, 2, 1, 3, 0, 2, 0, 3, 
-	2, 0, 2
+	0, 2, 1, 0, 2, 0, 4, 0, 
+	2, 2, 4
 ]
 
 class << self
@@ -53,8 +53,8 @@ class << self
 	private :_json_float_range_lengths, :_json_float_range_lengths=
 end
 self._json_float_range_lengths = [
-	0, 1, 1, 0, 1, 1, 1, 1, 
-	2, 0, 2
+	0, 1, 1, 1, 1, 1, 1, 0, 
+	2, 2, 1
 ]
 
 class << self
@@ -62,8 +62,8 @@ class << self
 	private :_json_float_index_offsets, :_json_float_index_offsets=
 end
 self._json_float_index_offsets = [
-	0, 0, 4, 7, 11, 13, 17, 19, 
-	24, 29, 30
+	0, 0, 4, 7, 9, 13, 15, 21, 
+	22, 27, 32
 ]
 
 class << self
@@ -72,10 +72,10 @@ class << self
 end
 self._json_float_indicies = [
 	0, 2, 3, 1, 2, 3, 1, 4, 
-	5, 5, 1, 6, 1, 7, 7, 8, 
-	1, 8, 1, 4, 5, 5, 3, 1, 
-	5, 5, 1, 6, 9, 1, 1, 1, 
-	1, 8, 9, 0
+	1, 5, 5, 6, 1, 6, 1, 1, 
+	8, 9, 9, 1, 7, 1, 9, 9, 
+	1, 4, 7, 1, 1, 1, 6, 7, 
+	1, 8, 9, 9, 10, 7, 0
 ]
 
 class << self
@@ -83,8 +83,8 @@ class << self
 	private :_json_float_trans_targs, :_json_float_trans_targs=
 end
 self._json_float_trans_targs = [
-	2, 0, 3, 7, 4, 5, 8, 6, 
-	10, 9
+	2, 0, 6, 10, 8, 5, 9, 7, 
+	3, 4, 10
 ]
 
 class << self
@@ -92,8 +92,8 @@ class << self
 	private :_json_float_trans_actions, :_json_float_trans_actions=
 end
 self._json_float_trans_actions = [
-	0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 1
+	3, 0, 5, 3, 5, 3, 5, 1, 
+	3, 3, 5
 ]
 
 class << self
@@ -103,7 +103,7 @@ self.json_float_start = 1;
 class << self
 	attr_accessor :json_float_first_final
 end
-self.json_float_first_final = 8;
+self.json_float_first_final = 6;
 class << self
 	attr_accessor :json_float_error
 end
@@ -115,7 +115,7 @@ end
 self.json_float_en_main = 1;
 
 
-# line 18 "json_float.rl"
+# line 22 "json_float.rl"
         super
       end
 
@@ -130,7 +130,7 @@ begin
 	cs = json_float_start
 end
 
-# line 25 "json_float.rl"
+# line 29 "json_float.rl"
         
 # line 136 "json_float.rb"
 begin
@@ -223,7 +223,15 @@ when 0 then
 		break
 	end
  		end
-# line 227 "json_float.rb"
+when 1 then
+# line 7 "json_float.rl"
+		begin
+ o.t :char, [data[p]].pack("c*") 		end
+when 2 then
+# line 8 "json_float.rl"
+		begin
+ o.t :number, [data[p]].pack("c*").to_i 		end
+# line 235 "json_float.rb"
 			end # action switch
 		end
 	end
@@ -250,11 +258,9 @@ when 0 then
 	end
 	end
 
-# line 26 "json_float.rl"
+# line 30 "json_float.rl"
 
         if cs >= json_float_first_final
-          o.output data.range(t_p...p).pack('c*')
-
           p
         end
       end

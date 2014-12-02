@@ -1,7 +1,6 @@
 require 'json_better_formatter/parsers/json'
 require 'json_better_formatter/parsers/json_array'
 require 'json_better_formatter/parsers/json_float'
-require 'json_better_formatter/parsers/json_integer'
 require 'json_better_formatter/parsers/json_object'
 require 'json_better_formatter/parsers/json_string'
 require 'json_better_formatter/parsers/json_value'
@@ -18,7 +17,6 @@ class JsonBetterFormatter
   prepend Parsers::Json
   prepend Parsers::JsonArray
   prepend Parsers::JsonFloat
-  prepend Parsers::JsonInteger
   prepend Parsers::JsonObject
   prepend Parsers::JsonString
   prepend Parsers::JsonValue

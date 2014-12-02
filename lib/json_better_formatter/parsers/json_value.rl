@@ -13,9 +13,9 @@
     }
 
     action parse_number {
-      if np = parse_json_float(fpc, pe)
-        fexec np;
-      elsif np = parse_json_integer(fpc, pe)
+      np = parse_json_float(fpc, pe)
+
+      if np
         fexec np;
       else
         fhold; fbreak;

@@ -257,10 +257,9 @@ when 1 then
 # line 15 "json_value.rl"
 		begin
 
-      if np = parse_json_float(p, pe)
-         begin p = (( np))-1; end
+      np = parse_json_float(p, pe)
 
-      elsif np = parse_json_integer(p, pe)
+      if np
          begin p = (( np))-1; end
 
       else
@@ -331,7 +330,7 @@ when 9 then
 # line 52 "json_value.rl"
 		begin
  o.t :end_string 		end
-# line 335 "json_value.rb"
+# line 334 "json_value.rb"
 			end # action switch
 		end
 	end

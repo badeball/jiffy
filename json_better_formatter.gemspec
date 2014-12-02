@@ -24,8 +24,6 @@ Gem::Specification.new do |s|
     lib/json_better_formatter/parsers/json_common.rl
     lib/json_better_formatter/parsers/json_float.rb
     lib/json_better_formatter/parsers/json_float.rl
-    lib/json_better_formatter/parsers/json_integer.rb
-    lib/json_better_formatter/parsers/json_integer.rl
     lib/json_better_formatter/parsers/json_object.rb
     lib/json_better_formatter/parsers/json_object.rl
     lib/json_better_formatter/parsers/json_string.rb
