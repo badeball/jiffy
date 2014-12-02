@@ -104,6 +104,12 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.0.1
+
+* The application is renamed Jiffy.
+* The executable may now read from standard input.
+* SIGTERM and SIGINT is now handled properly and a ruby stacktrace is now shown.
+
 ### 1.0.0
 
 * ArgumentError is raised instead of custom error classes for each argument.
