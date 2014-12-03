@@ -108,7 +108,7 @@ Tested against the following Ruby versions.
 
 * The application is renamed Jiffy.
 * The executable may now read from standard input.
-* SIGTERM and SIGINT is now handled properly and a ruby stacktrace is now shown.
+* SIGTERM and SIGINT is now handled properly and a ruby stacktrace is not shown.
 
 ### 1.0.0
 
