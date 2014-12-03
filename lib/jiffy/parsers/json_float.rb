@@ -4,7 +4,7 @@
 # line 15 "json_float.rl"
 
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module JsonFloat
       def initialize(*args)

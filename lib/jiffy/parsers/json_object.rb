@@ -4,7 +4,7 @@
 # line 36 "json_object.rl"
 
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module JsonObject
       def initialize(*args)

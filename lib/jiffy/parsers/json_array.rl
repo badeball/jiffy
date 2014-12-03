@@ -22,7 +22,7 @@
           end_array >{ o.t :end_array } @exit;
 }%%
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module JsonArray
       def initialize(*args)

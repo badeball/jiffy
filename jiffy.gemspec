@@ -1,38 +1,38 @@
-require File.join(File.dirname(__FILE__), 'lib', 'json_better_formatter', 'version')
+require File.join(File.dirname(__FILE__), 'lib', 'jiffy', 'version')
 
 Gem::Specification.new do |s|
-  s.name        = 'json_better_formatter'
-  s.version     = JsonBetterFormatter::VERSION
+  s.name        = 'jiffy'
+  s.version     = Jiffy::VERSION
   s.license     = 'MIT'
   s.date        = '2014-08-15'
 
   s.summary     = 'A streaming-based JSON formatter in Ruby.'
-  s.description = 'JsonBetterFormatter utilizes Ragel in order to parse and continuously format JSON data. This allows it to achieve a constant memory usage, independent of the input size.'
+  s.description = 'Jiffy utilizes Ragel in order to parse and continuously format JSON data. This allows it to achieve a constant memory usage, independent of the input size.'
 
   s.authors     = ['Jonas Amundsen']
   s.email       = ['jonasba+gem@gmail.com']
-  s.homepage    = 'https://github.com/badeball/json_better_formatter'
+  s.homepage    = 'https://github.com/badeball/jiffy'
 
-  s.executables = 'format-json'
+  s.executables = 'jiffy'
 
   s.files       = %w[
-    bin/format-json
-    lib/json_better_formatter/parsers/json.rb
-    lib/json_better_formatter/parsers/json.rl
-    lib/json_better_formatter/parsers/json_array.rb
-    lib/json_better_formatter/parsers/json_array.rl
-    lib/json_better_formatter/parsers/json_common.rl
-    lib/json_better_formatter/parsers/json_float.rb
-    lib/json_better_formatter/parsers/json_float.rl
-    lib/json_better_formatter/parsers/json_object.rb
-    lib/json_better_formatter/parsers/json_object.rl
-    lib/json_better_formatter/parsers/json_string.rb
-    lib/json_better_formatter/parsers/json_string.rl
-    lib/json_better_formatter/parsers/json_value.rb
-    lib/json_better_formatter/parsers/json_value.rl
-    lib/json_better_formatter/json_outputter.rb
-    lib/json_better_formatter/version.rb
-    lib/json_better_formatter.rb
+    bin/jiffy
+    lib/jiffy/parsers/json.rb
+    lib/jiffy/parsers/json.rl
+    lib/jiffy/parsers/json_array.rb
+    lib/jiffy/parsers/json_array.rl
+    lib/jiffy/parsers/json_common.rl
+    lib/jiffy/parsers/json_float.rb
+    lib/jiffy/parsers/json_float.rl
+    lib/jiffy/parsers/json_object.rb
+    lib/jiffy/parsers/json_object.rl
+    lib/jiffy/parsers/json_string.rb
+    lib/jiffy/parsers/json_string.rl
+    lib/jiffy/parsers/json_value.rb
+    lib/jiffy/parsers/json_value.rl
+    lib/jiffy/json_outputter.rb
+    lib/jiffy/version.rb
+    lib/jiffy.rb
     test/negative-examples/hexadecimal.json
     test/negative-examples/infinity-value.json
     test/negative-examples/leading-comma.json
@@ -91,10 +91,10 @@ Gem::Specification.new do |s|
     test/positive-examples/string-trivial.json
     test/positive-examples/string-unicode.json
     test/positive-examples/true-value.json
-    test/json_better_formatter_test.rb
+    test/jiffy_test.rb
     Gemfile
     Gemfile.lock
-    json_better_formatter.gemspec
+    jiffy.gemspec
     LICENSE
     README.md
   ]

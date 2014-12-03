@@ -2,16 +2,16 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'stringio'
 require 'minitest/autorun'
-require 'json_better_formatter'
+require 'jiffy'
 
-describe JsonBetterFormatter do
+describe Jiffy do
   positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
 
   positive_examples.each do |example|
     it "should correctly format #{File.basename(example)}" do
       out = StringIO.new
 
-      JsonBetterFormatter.new(in: example, out: out).format
+      Jiffy.new(in: example, out: out).format
 
       assert_equal(out.string, File.read(example).strip)
     end
@@ -24,13 +24,13 @@ describe JsonBetterFormatter do
       out = StringIO.new
 
       expected_exception = if /unclosed/ =~ example
-                             JsonBetterFormatter::UnexpectedEndError
+                             Jiffy::UnexpectedEndError
                            else
-                             JsonBetterFormatter::UnparseableError
+                             Jiffy::UnparseableError
                            end
 
       assert_raises expected_exception do
-        JsonBetterFormatter.new(in: example, out: out).format
+        Jiffy.new(in: example, out: out).format
       end
     end
   end
@@ -40,7 +40,7 @@ describe JsonBetterFormatter do
       class Foo; end
 
       assert_raises ArgumentError do
-        JsonBetterFormatter.new(in: Foo.new)
+        Jiffy.new(in: Foo.new)
       end
     end
   end

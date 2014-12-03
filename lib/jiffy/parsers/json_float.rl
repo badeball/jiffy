@@ -14,7 +14,7 @@
     main := (significand exponent?) (^[0-9Ee.\-]? @exit );
 }%%
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module JsonFloat
       def initialize(*args)

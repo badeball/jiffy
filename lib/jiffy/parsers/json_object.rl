@@ -35,7 +35,7 @@
     ) @exit;
 }%%
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module JsonObject
       def initialize(*args)

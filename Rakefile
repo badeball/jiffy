@@ -9,7 +9,7 @@ end
 desc 'Compile every parser using Ragel'
 
 task :compile do
-  Dir.chdir 'lib/json_better_formatter/parsers/' do
+  Dir.chdir 'lib/jiffy/parsers/' do
     (Dir['*.rl'] - ['json_common.rl']).each do |parser|
       system "ragel -R #{parser}"
     end

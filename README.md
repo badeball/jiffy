@@ -1,7 +1,7 @@
-json_better_formatter
-=====================
+Jiffy
+=====
 
-[![Build Status](https://travis-ci.org/badeball/json_better_formatter.png)](https://travis-ci.org/badeball/json_better_formatter)
+[![Build Status](https://travis-ci.org/badeball/jiffy.png)](https://travis-ci.org/badeball/jiffy)
 
 A streaming-based JSON formatter in Ruby that utilizes Ragel in order to parse
 and continuously format JSON data. This allows it to achieve a somewhat
@@ -14,27 +14,27 @@ uses JSON#pretty_generate.
 The utility can be installed using `gem`, but is also packaged for Arch Linux.
 
 ```
-$ gem install json_better_formatter
+$ gem install jiffy
 ```
 
 It can be installed system-wide using the following options.
 
 ```
-$ gem install --no-user-install -i "$(ruby -e'puts Gem.default_dir')" -n /usr/bin json_better_formatter
+$ gem install --no-user-install -i "$(ruby -e'puts Gem.default_dir')" -n /usr/bin jiffy
 ```
 
 ### Arch Linux
 
 ```
-$ yaourt -Syua ruby-json_better_formatter
+$ yaourt -Syua ruby-jiffy
 ```
 
 ## Usage
 
 ```ruby
-require 'json_better_formatter'
+require 'jiffy'
 
-JsonBetterFormatter.new(in: 'some.json').format
+Jiffy.new(in: 'some.json').format
 
 # {
 #   "menu": {
@@ -63,7 +63,7 @@ JsonBetterFormatter.new(in: 'some.json').format
 One can also chose to specify an IO object as input stream.
 
 ```ruby
-JsonBetterFormatter.new(in: File.open('some.json')).format
+Jiffy.new(in: File.open('some.json')).format
 ```
 
 It is also possible to specify an IO object as output stream.
@@ -73,7 +73,7 @@ require 'stringio'
 
 out = StringIO.new
 
-JsonBetterFormatter.new(in: 'some.json', out: out).format
+Jiffy.new(in: 'some.json', out: out).format
 ```
 
 ### Command line usage
@@ -83,11 +83,11 @@ of any size. The executable can read from a file specified as an argument or
 read from standard input.
 
 ```
-$ format-json incredibly-large.json | less
+$ jiffy incredibly-large.json | less
 ```
 
 ```
-$ cat incredibly-large.json | format-json | less
+$ cat incredibly-large.json | jiffy | less
 ```
 
 ## Compatibility

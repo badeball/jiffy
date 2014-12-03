@@ -26,7 +26,7 @@
             ) ignore*;
 }%%
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module Json
       def initialize(*args)

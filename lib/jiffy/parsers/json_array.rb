@@ -4,7 +4,7 @@
 # line 23 "json_array.rl"
 
 
-class JsonBetterFormatter
+class Jiffy
   module Parsers
     module JsonArray
       def initialize(*args)

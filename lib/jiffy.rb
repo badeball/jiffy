@@ -1,12 +1,12 @@
-require 'json_better_formatter/parsers/json'
-require 'json_better_formatter/parsers/json_array'
-require 'json_better_formatter/parsers/json_float'
-require 'json_better_formatter/parsers/json_object'
-require 'json_better_formatter/parsers/json_string'
-require 'json_better_formatter/parsers/json_value'
-require 'json_better_formatter/json_outputter'
+require 'jiffy/parsers/json'
+require 'jiffy/parsers/json_array'
+require 'jiffy/parsers/json_float'
+require 'jiffy/parsers/json_object'
+require 'jiffy/parsers/json_string'
+require 'jiffy/parsers/json_value'
+require 'jiffy/json_outputter'
 
-class JsonBetterFormatter
+class Jiffy
   class UnparseableError < StandardError; end
   class UnexpectedEndError < StandardError; end
 

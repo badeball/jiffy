@@ -1,9 +1,9 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'minitest/autorun'
-require 'json_better_formatter/json_outputter'
+require 'jiffy/json_outputter'
 
-describe JsonBetterFormatter::JsonOutputter do
+describe Jiffy::JsonOutputter do
   describe '#initialize' do
     it 'should raise an error when :out does not respond to #print' do
       out = Object.new
@@ -17,7 +17,7 @@ describe JsonBetterFormatter::JsonOutputter do
       end
 
       assert_raises ArgumentError do
-        JsonBetterFormatter::JsonOutputter.new out: out
+        Jiffy::JsonOutputter.new out: out
       end
     end
   end

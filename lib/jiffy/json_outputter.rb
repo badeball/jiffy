@@ -1,4 +1,4 @@
-class JsonBetterFormatter
+class Jiffy
   class JsonOutputter
     attr_accessor :out, :indent
 
