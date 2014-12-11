@@ -7,30 +7,26 @@ require 'jiffy'
 describe Jiffy do
   positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
 
-  positive_examples.each do |example|
-    it "should correctly format #{File.basename(example)}" do
-      out = StringIO.new
+  describe '#format' do
+    positive_examples.each do |example|
+      it "should format #{File.basename(example)} without raising an exception" do
+        out = StringIO.new
 
-      Jiffy.new(in: example, out: out).format
-
-      assert_equal(out.string, File.read(example).strip)
-    end
-  end
-
-  negative_examples = Dir[File.join(File.dirname(__FILE__), 'negative-examples', '*')]
-
-  negative_examples.each do |example|
-    it "should not format #{File.basename(example)}" do
-      out = StringIO.new
-
-      expected_exception = if /unclosed/ =~ example
-                             Jiffy::UnexpectedEndError
-                           else
-                             Jiffy::UnparseableError
-                           end
-
-      assert_raises expected_exception do
         Jiffy.new(in: example, out: out).format
+
+        assert_equal(out.string, File.read(example).strip)
+      end
+    end
+
+    negative_examples = Dir[File.join(File.dirname(__FILE__), 'negative-examples', '*')]
+
+    negative_examples.each do |example|
+      it "should raise an exception when formatting #{File.basename(example)}" do
+        out = StringIO.new
+
+        assert_raises Jiffy::UnexpectedEndError, Jiffy::UnparseableError do
+          Jiffy.new(in: example, out: out).format
+        end
       end
     end
   end
