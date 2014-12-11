@@ -39,6 +39,16 @@ describe Jiffy do
         Jiffy.new(in: example, out: StringIO.new).format
       end
     end
+
+    it 'should raise UnparseableError on invalid JSON input' do
+      example = StringIO.new <<-JSON.strip
+        ["Invalid" "JSON"]
+      JSON
+
+      assert_raises Jiffy::UnparseableError do
+        Jiffy.new(in: example, out: StringIO.new).format
+      end
+    end
   end
 
   describe '#initialize' do
