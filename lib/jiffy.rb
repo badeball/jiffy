@@ -41,7 +41,7 @@ class Jiffy
   private
 
   def raise_unparseable(p)
-    if !@io.closed? && @io.eof? && @data.length == p
+    if !@io.closed? && @io.eof? && (@data.nil? || @data.length == p)
       raise UnexpectedEndError, 'Unexpected end of input'
     else
       raise UnparseableError, "Unexpected token at position #{p}"

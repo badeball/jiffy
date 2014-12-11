@@ -40,6 +40,14 @@ describe Jiffy do
       end
     end
 
+    it 'should raise UnexpectedEndError on empty input' do
+      example = StringIO.new ""
+
+      assert_raises Jiffy::UnexpectedEndError do
+        Jiffy.new(in: example, out: StringIO.new).format
+      end
+    end
+
     it 'should raise UnparseableError on invalid JSON input' do
       example = StringIO.new <<-JSON.strip
         ["Invalid" "JSON"]
