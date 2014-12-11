@@ -29,6 +29,16 @@ describe Jiffy do
         end
       end
     end
+
+    it 'should raise UnexpectedEndError on valid, but incomplete JSON input' do
+      example = StringIO.new <<-JSON.strip
+        ["Incomplete JSON
+      JSON
+
+      assert_raises Jiffy::UnexpectedEndError do
+        Jiffy.new(in: example, out: StringIO.new).format
+      end
+    end
   end
 
   describe '#initialize' do
