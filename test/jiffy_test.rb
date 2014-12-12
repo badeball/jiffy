@@ -8,6 +8,12 @@ valid_json = '["Valid JSON"]'
 invalid_json = '["Invalid" "JSON"]'
 incomplete_json = '["Incomplete JSON'
 
+denying_io = Object.new.tap do |io|
+  def io.read(*)
+    raise Errno::EACCES
+  end
+end
+
 describe Jiffy do
   positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
 
@@ -170,6 +176,26 @@ describe Jiffy do
       err = StringIO.new
 
       Jiffy.new(in: example, out: StringIO.new).cl_format(err: err)
+
+      assert_equal "\n", err.string[-1]
+    end
+
+    it 'should return false upon Errno::EACCES' do
+      assert_equal false, Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: StringIO.new)
+    end
+
+    it 'should write "jiffy: Permission denied" to :stderr upon Errno::EACCES' do
+      err = StringIO.new
+
+      Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: err)
+
+      assert_includes err.string, "jiffy: Permission denied"
+    end
+
+    it ':stderr should end with a newline upon Errno::EACCES' do
+      err = StringIO.new
+
+      Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: err)
 
       assert_equal "\n", err.string[-1]
     end

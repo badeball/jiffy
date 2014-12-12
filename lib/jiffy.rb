@@ -44,6 +44,16 @@ class Jiffy
     @outputter.t :char, "\n"
 
     true
+  rescue Errno::EACCES
+    err = options[:err] || $stderr
+
+    if @io.respond_to? :filename
+      err.write "jiffy: #{@io.filename}: Permission denied\n"
+    else
+      err.write "jiffy: Permission denied\n"
+    end
+
+    false
   rescue UnexpectedEndError, UnparseableError => e
     err = options[:err] || $stderr
 
