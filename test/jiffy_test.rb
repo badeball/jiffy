@@ -4,6 +4,10 @@ require 'stringio'
 require 'minitest/autorun'
 require 'jiffy'
 
+valid_json = '["Valid JSON"]'
+invalid_json = '["Invalid" "JSON"]'
+incomplete_json = '["Incomplete JSON'
+
 describe Jiffy do
   positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
 
@@ -31,9 +35,7 @@ describe Jiffy do
     end
 
     it 'should raise UnexpectedEndError on valid, but incomplete JSON input' do
-      example = StringIO.new <<-JSON.strip
-        ["Incomplete JSON
-      JSON
+      example = StringIO.new incomplete_json
 
       assert_raises Jiffy::UnexpectedEndError do
         Jiffy.new(in: example, out: StringIO.new).format
@@ -49,9 +51,7 @@ describe Jiffy do
     end
 
     it 'should raise UnparseableError on invalid JSON input' do
-      example = StringIO.new <<-JSON.strip
-        ["Invalid" "JSON"]
-      JSON
+      example = StringIO.new invalid_json
 
       assert_raises Jiffy::UnparseableError do
         Jiffy.new(in: example, out: StringIO.new).format
@@ -71,17 +71,13 @@ describe Jiffy do
 
   describe '#cl_format' do
     it 'should return true upon valid input' do
-      example = StringIO.new <<-JSON
-        ["Valid JSON"]
-      JSON
+      example = StringIO.new valid_json
 
       assert_equal true, Jiffy.new(in: example, out: StringIO.new).cl_format
     end
 
     it 'should not write to :stderr upon valid input' do
-      example = StringIO.new <<-JSON
-        ["Valid JSON"]
-      JSON
+      example = StringIO.new valid_json
 
       err = StringIO.new
 
@@ -91,9 +87,7 @@ describe Jiffy do
     end
 
     it ':stdout should end with a newline upon valid input' do
-      example = StringIO.new <<-JSON
-        ["Valid JSON"]
-      JSON
+      example = StringIO.new valid_json
 
       out = StringIO.new
 
@@ -103,17 +97,13 @@ describe Jiffy do
     end
 
     it 'should return false upon valid, but incomplete input' do
-      example = StringIO.new <<-JSON.strip
-        ["Incomplete JSON
-      JSON
+      example = StringIO.new incomplete_json
 
       assert_equal false, Jiffy.new(in: example, out: StringIO.new).cl_format(err: StringIO.new)
     end
 
     it 'should write "Unexpected end" to :stderr upon valid, but incomplete input' do
-      example = StringIO.new <<-JSON.strip
-        ["Incomplete JSON
-      JSON
+      example = StringIO.new incomplete_json
 
       err = StringIO.new
 
@@ -123,9 +113,7 @@ describe Jiffy do
     end
 
     it ':stderr should end with a newline upon valid, but incomplete input' do
-      example = StringIO.new <<-JSON.strip
-        ["Incomplete JSON
-      JSON
+      example = StringIO.new incomplete_json
 
       err = StringIO.new
 
@@ -161,17 +149,13 @@ describe Jiffy do
     end
 
     it 'should return false upon invalid input' do
-      example = StringIO.new <<-JSON
-        ["Invalid" "JSON"]
-      JSON
+      example = StringIO.new invalid_json
 
       assert_equal false, Jiffy.new(in: example, out: StringIO.new).cl_format(err: StringIO.new)
     end
 
     it 'should write "Unexpected token" to :stderr upon invalid input' do
-      example = StringIO.new <<-JSON
-        ["Invalid" "JSON"]
-      JSON
+      example = StringIO.new invalid_json
 
       err = StringIO.new
 
@@ -181,9 +165,7 @@ describe Jiffy do
     end
 
     it ':stderr should end with a newline upon invalid input' do
-      example = StringIO.new <<-JSON
-        ["Invalid" "JSON"]
-      JSON
+      example = StringIO.new invalid_json
 
       err = StringIO.new
 
