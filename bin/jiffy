@@ -32,15 +32,10 @@ Signal.trap("TERM") do
   exit 1
 end
 
-begin
-  if ARGV.empty?
-    Jiffy.new(in: STDIN).format
-  else
-    Jiffy.new(in: ARGF).format
-  end
-rescue Jiffy::UnparseableError => e
-  $stderr.puts e
-  exit! 1
-rescue Errno::EPIPE
-  # Do nothing
-end
+result = if ARGV.empty?
+           Jiffy.new(in: STDIN).cl_format(err: STDERR)
+         else
+           Jiffy.new(in: ARGF).cl_format(err: STDERR)
+         end
+
+exit 1 unless result

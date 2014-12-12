@@ -38,6 +38,20 @@ class Jiffy
     @outputter = JsonOutputter.new(options)
   end
 
+  def cl_format(options = {})
+    format
+
+    @outputter.t :char, "\n"
+
+    true
+  rescue UnexpectedEndError, UnparseableError => e
+    err = options[:err] || $stderr
+
+    err.write e.message << "\n"
+
+    false
+  end
+
   private
 
   def raise_unparseable(p)
