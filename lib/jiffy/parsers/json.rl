@@ -37,23 +37,17 @@ class Jiffy
       def parse_json
         pe = :ignored
         eof = :ignored
-        leftover = []
-
-        %% write init;
 
         begin
-          while chunk = io.readpartial(1_000_000)
-            self.data = leftover + chunk.unpack("c*")
-            p ||= 0
-            pe = data.length
-
-            %% write exec;
-          end
+          %% write init;
+          %% write exec;
         rescue EOFError
-          # noop
+          if p < data.bytes_read || data.bytes_read == 0
+            raise UnexpectedEndError, 'Unexpected end of input'
+          end
         end
 
-        raise_unparseable p unless p == pe
+        raise_unparseable p unless p == data.bytes_read
       end
     end
   end

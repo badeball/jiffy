@@ -4,6 +4,7 @@ require 'jiffy/parsers/json_float'
 require 'jiffy/parsers/json_object'
 require 'jiffy/parsers/json_string'
 require 'jiffy/parsers/json_value'
+require 'jiffy/array_mimicking_io'
 require 'jiffy/json_outputter'
 
 class Jiffy
@@ -34,6 +35,8 @@ class Jiffy
     else
       raise ArgumentError, 'Invalid input source'
     end
+
+    @data = ArrayMimickingIO.new(@io)
 
     @outputter = JsonOutputter.new(options)
   end
@@ -85,10 +88,6 @@ class Jiffy
   private
 
   def raise_unparseable(p)
-    if (@io.closed? || @io.eof?) && (@data.nil? || @data.length == p)
-      raise UnexpectedEndError, 'Unexpected end of input'
-    else
-      raise UnparseableError, "Unexpected token at position #{p}"
-    end
+    raise UnparseableError, "Unexpected token at position #{p}"
   end
 end

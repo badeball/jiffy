@@ -121,9 +121,9 @@ self.json_en_main = 1;
       def parse_json
         pe = :ignored
         eof = :ignored
-        leftover = []
 
-        
+        begin
+          
 # line 128 "json.rb"
 begin
 	p ||= 0
@@ -132,15 +132,8 @@ begin
 end
 
 # line 43 "json.rl"
-
-        begin
-          while chunk = io.readpartial(1_000_000)
-            self.data = leftover + chunk.unpack("c*")
-            p ||= 0
-            pe = data.length
-
-            
-# line 144 "json.rb"
+          
+# line 137 "json.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -257,7 +250,7 @@ when 1 then
 
       end
     		end
-# line 261 "json.rb"
+# line 254 "json.rb"
 			end # action switch
 		end
 	end
@@ -284,13 +277,14 @@ when 1 then
 	end
 	end
 
-# line 51 "json.rl"
-          end
+# line 44 "json.rl"
         rescue EOFError
-          # noop
+          if p < data.bytes_read || data.bytes_read == 0
+            raise UnexpectedEndError, 'Unexpected end of input'
+          end
         end
 
-        raise_unparseable p unless p == pe
+        raise_unparseable p unless p == data.bytes_read
       end
     end
   end
