@@ -8,21 +8,31 @@ valid_json = '["Valid JSON"]'
 invalid_json = '["Invalid" "JSON"]'
 incomplete_json = '["Incomplete JSON'
 
-denying_io = Object.new.tap do |io|
-  def io.readpartial(*)
-    raise Errno::EACCES
+def it_should_properly_handle(exception, options)
+  io = Object.new.tap do |io|
+    io.define_singleton_method :readpartial do |*|
+      raise exception
+    end
   end
-end
 
-missing_io = Object.new.tap do |io|
-  def io.readpartial(*)
-    raise Errno::ENOENT
+  it "should return false upon #{exception.inspect}" do
+    assert_equal false, Jiffy.new(in: io, out: StringIO.new).cl_format(err: StringIO.new)
   end
-end
 
-dir_io = Object.new.tap do |io|
-  def io.readpartial(*)
-    raise Errno::EISDIR
+  it "should write #{options[:with]} to :stderr upon #{exception.inspect}" do
+    err = StringIO.new
+
+    Jiffy.new(in: io, out: StringIO.new).cl_format(err: err)
+
+    assert_includes err.string, options[:with]
+  end
+
+  it ":stderr should end with a newline upon #{exception.inspect}" do
+    err = StringIO.new
+
+    Jiffy.new(in: io, out: StringIO.new).cl_format(err: err)
+
+    assert_equal "\n", err.string[-1]
   end
 end
 
@@ -88,6 +98,12 @@ describe Jiffy do
   end
 
   describe '#cl_format' do
+    it_should_properly_handle Jiffy::UnexpectedEndError.new('Unexpected end of input'), with: 'Unexpected end of input'
+    it_should_properly_handle Jiffy::UnparseableError.new('Unexpected token at position'), with: 'Unexpected token at position'
+    it_should_properly_handle Errno::EACCES, with: 'jiffy: Permission denied'
+    it_should_properly_handle Errno::ENOENT, with: 'jiffy: No such file or directory'
+    it_should_properly_handle Errno::EISDIR, with: 'jiffy: Is a directory'
+
     it 'should return true upon valid input' do
       example = StringIO.new valid_json
 
@@ -112,144 +128,6 @@ describe Jiffy do
       Jiffy.new(in: example, out: out).cl_format
 
       assert_equal "\n", out.string[-1]
-    end
-
-    it 'should return false upon valid, but incomplete input' do
-      example = StringIO.new incomplete_json
-
-      assert_equal false, Jiffy.new(in: example, out: StringIO.new).cl_format(err: StringIO.new)
-    end
-
-    it 'should write "Unexpected end" to :stderr upon valid, but incomplete input' do
-      example = StringIO.new incomplete_json
-
-      err = StringIO.new
-
-      Jiffy.new(in: example, out: StringIO.new).cl_format(err: err)
-
-      assert_includes err.string, "Unexpected end"
-    end
-
-    it ':stderr should end with a newline upon valid, but incomplete input' do
-      example = StringIO.new incomplete_json
-
-      err = StringIO.new
-
-      Jiffy.new(in: example, out: StringIO.new).cl_format(err: err)
-
-      assert_equal "\n", err.string[-1]
-    end
-
-    it 'should return false upon empty input' do
-      example = StringIO.new ""
-
-      assert_equal false, Jiffy.new(in: example).cl_format(err: StringIO.new)
-    end
-
-    it 'should write "Unexpected end" to :stderr upon empty input' do
-      example = StringIO.new ""
-
-      err = StringIO.new
-
-      Jiffy.new(in: example).cl_format(err: err)
-
-      assert_includes err.string, "Unexpected end"
-    end
-
-    it ':stderr should end with a newline upon empty input' do
-      example = StringIO.new ""
-
-      err = StringIO.new
-
-      Jiffy.new(in: example).cl_format(err: err)
-
-      assert_equal "\n",  err.string[-1]
-    end
-
-    it 'should return false upon invalid input' do
-      example = StringIO.new invalid_json
-
-      assert_equal false, Jiffy.new(in: example, out: StringIO.new).cl_format(err: StringIO.new)
-    end
-
-    it 'should write "Unexpected token" to :stderr upon invalid input' do
-      example = StringIO.new invalid_json
-
-      err = StringIO.new
-
-      Jiffy.new(in: example, out: StringIO.new).cl_format(err: err)
-
-      assert_includes err.string, "Unexpected token"
-    end
-
-    it ':stderr should end with a newline upon invalid input' do
-      example = StringIO.new invalid_json
-
-      err = StringIO.new
-
-      Jiffy.new(in: example, out: StringIO.new).cl_format(err: err)
-
-      assert_equal "\n", err.string[-1]
-    end
-
-    it 'should return false upon Errno::EACCES' do
-      assert_equal false, Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: StringIO.new)
-    end
-
-    it 'should write "jiffy: Permission denied" to :stderr upon Errno::EACCES' do
-      err = StringIO.new
-
-      Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: err)
-
-      assert_includes err.string, "jiffy: Permission denied"
-    end
-
-    it ':stderr should end with a newline upon Errno::EACCES' do
-      err = StringIO.new
-
-      Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: err)
-
-      assert_equal "\n", err.string[-1]
-    end
-
-    it 'should return false upon Errno::ENOENT' do
-      assert_equal false, Jiffy.new(in: missing_io, out: StringIO.new).cl_format(err: StringIO.new)
-    end
-
-    it 'should write "jiffy: No such file or directory" to :stderr upon Errno::ENOENT' do
-      err = StringIO.new
-
-      Jiffy.new(in: missing_io, out: StringIO.new).cl_format(err: err)
-
-      assert_includes err.string, "jiffy: No such file or directory"
-    end
-
-    it ':stderr should end with a newline upon Errno::ENOENT' do
-      err = StringIO.new
-
-      Jiffy.new(in: missing_io, out: StringIO.new).cl_format(err: err)
-
-      assert_equal "\n", err.string[-1]
-    end
-
-    it 'should return false upon Errno::EISDIR' do
-      assert_equal false, Jiffy.new(in: dir_io, out: StringIO.new).cl_format(err: StringIO.new)
-    end
-
-    it 'should write "jiffy: No such file or directory" to :stderr upon Errno::EISDIR' do
-      err = StringIO.new
-
-      Jiffy.new(in: dir_io, out: StringIO.new).cl_format(err: err)
-
-      assert_includes err.string, "jiffy: Is a directory"
-    end
-
-    it ':stderr should end with a newline upon Errno::EISDIR' do
-      err = StringIO.new
-
-      Jiffy.new(in: dir_io, out: StringIO.new).cl_format(err: err)
-
-      assert_equal "\n", err.string[-1]
     end
   end
 end
