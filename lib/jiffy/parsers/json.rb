@@ -133,13 +133,14 @@ end
 
 # line 43 "json.rl"
 
-        while chunk = io.read(1_000_000)
-          self.data = leftover + chunk.unpack("c*")
-          p ||= 0
-          pe = data.length
+        begin
+          while chunk = io.readpartial(1_000_000)
+            self.data = leftover + chunk.unpack("c*")
+            p ||= 0
+            pe = data.length
 
-          
-# line 143 "json.rb"
+            
+# line 144 "json.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -256,7 +257,7 @@ when 1 then
 
       end
     		end
-# line 260 "json.rb"
+# line 261 "json.rb"
 			end # action switch
 		end
 	end
@@ -283,7 +284,10 @@ when 1 then
 	end
 	end
 
-# line 50 "json.rl"
+# line 51 "json.rl"
+          end
+        rescue EOFError
+          # noop
         end
 
         raise_unparseable p unless p == pe

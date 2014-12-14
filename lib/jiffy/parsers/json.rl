@@ -41,12 +41,16 @@ class Jiffy
 
         %% write init;
 
-        while chunk = io.read(1_000_000)
-          self.data = leftover + chunk.unpack("c*")
-          p ||= 0
-          pe = data.length
+        begin
+          while chunk = io.readpartial(1_000_000)
+            self.data = leftover + chunk.unpack("c*")
+            p ||= 0
+            pe = data.length
 
-          %% write exec;
+            %% write exec;
+          end
+        rescue EOFError
+          # noop
         end
 
         raise_unparseable p unless p == pe

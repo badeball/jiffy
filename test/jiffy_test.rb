@@ -9,19 +9,19 @@ invalid_json = '["Invalid" "JSON"]'
 incomplete_json = '["Incomplete JSON'
 
 denying_io = Object.new.tap do |io|
-  def io.read(*)
+  def io.readpartial(*)
     raise Errno::EACCES
   end
 end
 
 missing_io = Object.new.tap do |io|
-  def io.read(*)
+  def io.readpartial(*)
     raise Errno::ENOENT
   end
 end
 
 dir_io = Object.new.tap do |io|
-  def io.read(*)
+  def io.readpartial(*)
     raise Errno::EISDIR
   end
 end
