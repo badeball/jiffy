@@ -20,13 +20,13 @@ $ gem install jiffy
 It can be installed system-wide using the following options.
 
 ```
-$ gem install --no-user-install -i "$(ruby -e'puts Gem.default_dir')" -n /usr/bin jiffy
+$ gem install --no-user-install -i "$(ruby -e'puts Gem.default_dir')" -n /usr/local/bin jiffy
 ```
 
 ### Arch Linux
 
 ```
-$ yaourt -Syua ruby-jiffy
+$ yaourt -S ruby-jiffy
 ```
 
 ## Usage
