@@ -104,6 +104,14 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.0.2
+
+* Missing read permissions is now handled properly.
+* Non-existing file as argument is now handled properly.
+* Directory as argument is now handled properly.
+* Output now always ends with a newline.
+* #read is switched out in favor of #readpartial.
+
 ### 1.0.1
 
 * The application is renamed Jiffy.

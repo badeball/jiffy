@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name        = 'jiffy'
   s.version     = Jiffy::VERSION
   s.license     = 'MIT'
-  s.date        = '2014-12-03'
+  s.date        = '2014-12-14'
 
   s.summary     = 'A streaming-based JSON formatter in Ruby.'
   s.description = 'Jiffy utilizes Ragel in order to parse and continuously format JSON data. This allows it to achieve a constant memory usage, independent of the input size.'
