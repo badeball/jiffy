@@ -14,6 +14,18 @@ denying_io = Object.new.tap do |io|
   end
 end
 
+missing_io = Object.new.tap do |io|
+  def io.read(*)
+    raise Errno::ENOENT
+  end
+end
+
+dir_io = Object.new.tap do |io|
+  def io.read(*)
+    raise Errno::EISDIR
+  end
+end
+
 describe Jiffy do
   positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
 
@@ -196,6 +208,46 @@ describe Jiffy do
       err = StringIO.new
 
       Jiffy.new(in: denying_io, out: StringIO.new).cl_format(err: err)
+
+      assert_equal "\n", err.string[-1]
+    end
+
+    it 'should return false upon Errno::ENOENT' do
+      assert_equal false, Jiffy.new(in: missing_io, out: StringIO.new).cl_format(err: StringIO.new)
+    end
+
+    it 'should write "jiffy: No such file or directory" to :stderr upon Errno::ENOENT' do
+      err = StringIO.new
+
+      Jiffy.new(in: missing_io, out: StringIO.new).cl_format(err: err)
+
+      assert_includes err.string, "jiffy: No such file or directory"
+    end
+
+    it ':stderr should end with a newline upon Errno::ENOENT' do
+      err = StringIO.new
+
+      Jiffy.new(in: missing_io, out: StringIO.new).cl_format(err: err)
+
+      assert_equal "\n", err.string[-1]
+    end
+
+    it 'should return false upon Errno::EISDIR' do
+      assert_equal false, Jiffy.new(in: dir_io, out: StringIO.new).cl_format(err: StringIO.new)
+    end
+
+    it 'should write "jiffy: No such file or directory" to :stderr upon Errno::EISDIR' do
+      err = StringIO.new
+
+      Jiffy.new(in: dir_io, out: StringIO.new).cl_format(err: err)
+
+      assert_includes err.string, "jiffy: Is a directory"
+    end
+
+    it ':stderr should end with a newline upon Errno::EISDIR' do
+      err = StringIO.new
+
+      Jiffy.new(in: dir_io, out: StringIO.new).cl_format(err: err)
 
       assert_equal "\n", err.string[-1]
     end

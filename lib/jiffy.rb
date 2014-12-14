@@ -54,6 +54,26 @@ class Jiffy
     end
 
     false
+  rescue Errno::ENOENT
+    err = options[:err] || $stderr
+
+    if @io.respond_to? :filename
+      err.write "jiffy: #{@io.filename}: No such file or directory\n"
+    else
+      err.write "jiffy: No such file or directory\n"
+    end
+
+    false
+  rescue Errno::EISDIR
+    err = options[:err] || $stderr
+
+    if @io.respond_to? :filename
+      err.write "jiffy: #{@io.filename}: Is a directory\n"
+    else
+      err.write "jiffy: Is a directory\n"
+    end
+
+    false
   rescue UnexpectedEndError, UnparseableError => e
     err = options[:err] || $stderr
 
