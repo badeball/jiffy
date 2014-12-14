@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jiffy (1.0.2)
+    jiffy (1.0.3)
 
 GEM
   remote: https://rubygems.org/

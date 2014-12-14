@@ -104,6 +104,10 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.0.3
+
+* Fixed an issue with the gemspec.
+
 ### 1.0.2
 
 * Missing read permissions is now handled properly.
