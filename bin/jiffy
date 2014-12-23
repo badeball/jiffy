@@ -32,6 +32,10 @@ Signal.trap("TERM") do
   exit 1
 end
 
+Signal.trap("PIPE") do
+  exit 141
+end
+
 result = if ARGV.empty?
            Jiffy.new(in: STDIN).cl_format(err: STDERR)
          else
