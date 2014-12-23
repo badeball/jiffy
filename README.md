@@ -104,6 +104,10 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.0.4
+
+* SIGPIPE is handled by exiting (with exit code 141).
+
 ### 1.0.3
 
 * Fixed an issue with the gemspec.
