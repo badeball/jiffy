@@ -36,31 +36,85 @@ def it_should_properly_handle(exception, options)
   end
 end
 
+def it_should_format(json)
+  it "should format #{json.inspect}" do
+    begin
+      Jiffy.new(in: StringIO.new(json), out: StringIO.new).format
+    rescue Jiffy::UnexpectedEndError, Jiffy::UnparseableError
+      raise "should have parsed #{json.inspect}, but didn't"
+    end
+  end
+end
+
+def it_should_not_format(json)
+  it "should not format #{json.inspect}" do
+    assert_raises Jiffy::UnexpectedEndError, Jiffy::UnparseableError do
+      Jiffy.new(in: StringIO.new(json), out: StringIO.new).format
+    end
+  end
+end
+
 describe Jiffy do
-  positive_examples = Dir[File.join(File.dirname(__FILE__), 'positive-examples', '*')]
-
   describe '#format' do
-    positive_examples.each do |example|
-      it "should format #{File.basename(example)} without raising an exception" do
-        out = StringIO.new
+    it_should_format '{}'
+    it_should_format '{"":{}}'
+    it_should_format '{"":"","":""}'
+    it_should_format '[]'
+    it_should_format '[[]]'
+    it_should_format '[{}]'
+    it_should_format '{"":[]}'
+    it_should_format '["",""]'
+    it_should_format '[false]'
+    it_should_format '[true]'
+    it_should_format '[null]'
+    it_should_format '["foo"]'
+    it_should_format '["\b"]'
+    it_should_format '["\r"]'
+    it_should_format '["\f"]'
+    it_should_format '["\t"]'
+    it_should_format '["\n"]'
+    it_should_format '["\""]'
+    it_should_format '["\\\\"]'
+    it_should_format '["\/"]'
+    it_should_format '["\u1111"]'
+    it_should_format '[100]'
+    it_should_format '[100e10]'
+    it_should_format '[100E10]'
+    it_should_format '[100e-10]'
+    it_should_format '[100E-10]'
+    it_should_format '[1.123]'
+    it_should_format '[1.123e10]'
+    it_should_format '[1.123E10]'
+    it_should_format '[1.123e-10]'
+    it_should_format '[1.123E-10]'
+    it_should_format '[-100]'
+    it_should_format '[-100e10]'
+    it_should_format '[-100E10]'
+    it_should_format '[-100e-10]'
+    it_should_format '[-100E-10]'
+    it_should_format '[-1.123]'
+    it_should_format '[-1.123e10]'
+    it_should_format '[-1.123E10]'
+    it_should_format '[-1.123e-10]'
+    it_should_format '[-1.123E-10]'
 
-        Jiffy.new(in: example, out: out).format
-
-        assert_equal(out.string, File.read(example).strip)
-      end
-    end
-
-    negative_examples = Dir[File.join(File.dirname(__FILE__), 'negative-examples', '*')]
-
-    negative_examples.each do |example|
-      it "should raise an exception when formatting #{File.basename(example)}" do
-        out = StringIO.new
-
-        assert_raises Jiffy::UnexpectedEndError, Jiffy::UnparseableError do
-          Jiffy.new(in: example, out: out).format
-        end
-      end
-    end
+    it_should_not_format '[0x00]'
+    it_should_not_format '[Infinity]'
+    it_should_not_format '[,""]'
+    it_should_not_format '["",]'
+    it_should_not_format '[01]'
+    it_should_not_format "[\"line\nbreak\"]"
+    it_should_not_format '{"" ""}'
+    it_should_not_format '[NaN]'
+    it_should_not_format '[+1.123]'
+    it_should_not_format '[+100]'
+    it_should_not_format "['single quoted string']"
+    it_should_not_format "[\"tab\tcharacter\"]"
+    it_should_not_format '{"":"",}'
+    it_should_not_format 'true'
+    it_should_not_format '""'
+    it_should_not_format '[true'
+    it_should_not_format '{"":""'
 
     it 'should raise UnexpectedEndError on valid, but incomplete JSON input' do
       example = StringIO.new incomplete_json
