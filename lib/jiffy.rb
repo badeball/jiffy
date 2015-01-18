@@ -22,23 +22,33 @@ class Jiffy
     end
 
     @data = ArrayMimickingIO.new(@io)
-
-    @outputter = JsonOutputter.new(options)
   end
 
-  def format
-    parser = Parsers::Json.new(p: 0, data: @data, outputter: @outputter)
-    parser.parse
-  rescue EOFError
-    if parser.p < @data.bytes_read || @data.bytes_read == 0
-      raise UnexpectedEndError, 'Unexpected end of input'
+  def tokenize
+    Enumerator.new do |yielder|
+      begin
+        parser = Parsers::Json.new(p: 0, data: @data, yielder: yielder)
+        parser.parse
+      rescue EOFError
+        if parser.p < @data.bytes_read || @data.bytes_read == 0
+          raise UnexpectedEndError, 'Unexpected end of input'
+        end
+      end
+    end
+  end
+
+  def format(options = {})
+    enumerator = tokenize
+
+    loop do
+      options[:outputter].process_token *enumerator.next
     end
   end
 
   def cl_format(options = {})
-    format
+    format options
 
-    @outputter.t :char, "\n"
+    options[:outputter].process_token :char, "\n"
 
     true
   rescue Errno::EACCES

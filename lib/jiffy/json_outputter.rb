@@ -2,7 +2,7 @@ class Jiffy
   class JsonOutputter
     attr_accessor :out, :indent
 
-    def initialize(options)
+    def initialize(options = {})
       self.out = options[:out] || $stdout
 
       raise ArgumentError, 'Invalid output source' unless out.respond_to? :print
@@ -44,8 +44,6 @@ class Jiffy
           puts "Unknown token: #{token.inspect}"
       end
     end
-
-    alias_method :t, :process_token
 
     def output(content, options = {})
       self.indent += options[:indent] if options[:indent]

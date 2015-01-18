@@ -234,7 +234,7 @@ when 0 then
 # line 5 "json_array.rl"
 		begin
 
-       begin p = (( JsonValue.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonValue.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 1 then
@@ -250,15 +250,15 @@ when 1 then
 when 2 then
 # line 11 "json_array.rl"
 		begin
- o.t :value_separator 		end
+ y << :value_separator 		end
 when 3 then
 # line 13 "json_array.rl"
 		begin
- o.t :begin_array 		end
+ y << :begin_array 		end
 when 4 then
 # line 16 "json_array.rl"
 		begin
- o.t :end_array 		end
+ y << :end_array 		end
 # line 263 "json_array.rb"
 			end # action switch
 		end

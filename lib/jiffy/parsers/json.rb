@@ -219,14 +219,14 @@ when 0 then
 # line 5 "json.rl"
 		begin
 
-       begin p = (( JsonObject.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonObject.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 1 then
 # line 9 "json.rl"
 		begin
 
-       begin p = (( JsonArray.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonArray.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 # line 233 "json.rb"

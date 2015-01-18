@@ -3,17 +3,17 @@
     include json_common "json_common.rl";
 
     action parse_value {
-      fexec JsonValue.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonValue.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action exit { fhold; fbreak; }
 
-    next_element  = value_separator >{ o.t :value_separator } ignore* begin_value >parse_value;
+    next_element  = value_separator >{ y << :value_separator } ignore* begin_value >parse_value;
 
-    main := begin_array >{ o.t :begin_array } ignore*
+    main := begin_array >{ y << :begin_array } ignore*
           ((begin_value >parse_value ignore*)
            (ignore* next_element ignore*)*)?
-          end_array >{ o.t :end_array } @exit;
+          end_array >{ y << :end_array } @exit;
 }%%
 
 class Jiffy

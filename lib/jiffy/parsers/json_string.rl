@@ -4,7 +4,7 @@
 
     action exit { fhold; fbreak; }
 
-    action char { o.t :char, [data[p]].pack("c*") }
+    action char { y << [:char, [data[p]].pack("c*")] }
 
     character = ^([\"\\] | 0..0x1f) >char;
     sequence = '\\' >char [\"\\/bfnrt] >char;

@@ -229,7 +229,7 @@ when 0 then
 when 1 then
 # line 7 "json_string.rl"
 		begin
- o.t :char, [data[p]].pack("c*") 		end
+ y << [:char, [data[p]].pack("c*")] 		end
 # line 234 "json_string.rb"
 			end # action switch
 		end

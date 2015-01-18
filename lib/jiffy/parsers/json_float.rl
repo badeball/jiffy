@@ -4,8 +4,8 @@
 
     action exit { fhold; fbreak; }
 
-    action char { o.t :char, [data[p]].pack("c*") }
-    action number { o.t :number, [data[p]].pack("c*").to_i }
+    action char { y << [:char, [data[p]].pack("c*")] }
+    action number { y << [:number, [data[p]].pack("c*").to_i] }
 
     significand = '-'? @char ('0' >number | [1-9] >char [0-9]* $number) ('.' >char [0-9]+ $number)?;
 

@@ -34,46 +34,31 @@ $ yaourt -S ruby-jiffy
 ```ruby
 require 'jiffy'
 
-Jiffy.new(in: 'some.json').format
-
-# {
-#   "menu": {
-#     "id": "file",
-#     "value": "File",
-#     "popup": {
-#       "menuitem": [
-#         {
-#           "value": "New",
-#           "onclick": "CreateNewDoc()"
-#         },
-#         {
-#           "value": "Open",
-#           "onclick": "OpenDoc()"
-#         },
-#         {
-#           "value": "Close",
-#           "onclick": "CloseDoc()"
-#         }
-#       ]
-#     }
-#   }
-# }
+Jiffy.new(in: StringIO.new('[false, true, null]')).tokenize.to_a # => [:begin_array, :false, :value_separator, :true, :value_separator, :null, :end_array]
 ```
 
-One can also chose to specify an IO object as input stream.
+Any IO object that responds to `readpartial` can be used as an input source.
 
 ```ruby
-Jiffy.new(in: File.open('some.json')).format
+Jiffy.new(in: File.open('some.json'))
 ```
 
-It is also possible to specify an IO object as output stream.
+One can also chose to specify a file path instead of an IO object as input source.
+
+```ruby
+Jiffy.new(in: 'some.json')
+```
+
+`Jiffy#format` can be used to format the input source instead of just tokenizing it.
 
 ```ruby
 require 'stringio'
 
 out = StringIO.new
 
-Jiffy.new(in: 'some.json', out: out).format
+Jiffy.new(in: StringIO.new('[false, true, null]')).format(Jiffy::JsonOutputter.new(out: out))
+
+out.string # => "[\n  false,\n  true,\n  null\n]"
 ```
 
 ### Command line usage

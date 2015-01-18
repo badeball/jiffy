@@ -3,11 +3,11 @@
     include json_common "json_common.rl";
 
     action parse_object {
-      fexec JsonObject.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonObject.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action parse_array {
-      fexec JsonArray.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonArray.new(p: p, data: data, yielder: yielder).parse;
     }
 
     main := ignore* (

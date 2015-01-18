@@ -3,23 +3,23 @@
     include json_common "json_common.rl";
 
     action parse_value {
-      fexec JsonValue.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonValue.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action parse_name {
-      fexec JsonString.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonString.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action exit { fhold; fbreak; }
 
-    pair = ignore* begin_name >{ o.t :begin_string } >parse_name @{ o.t :end_string } ignore* name_separator >{ o.t :name_separator } ignore* begin_value >parse_value;
+    pair = ignore* begin_name >{ y << :begin_string } >parse_name @{ y << :end_string } ignore* name_separator >{ y << :name_separator } ignore* begin_value >parse_value;
 
-    next_pair = ignore* value_separator >{ o.t :value_separator } pair;
+    next_pair = ignore* value_separator >{ y << :value_separator } pair;
 
     main := (
-        begin_object >{ o.t :begin_object }
+        begin_object >{ y << :begin_object }
         (pair (next_pair)*)? ignore*
-        end_object >{ o.t :end_object }
+        end_object >{ y << :end_object }
     ) @exit;
 }%%
 

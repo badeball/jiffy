@@ -243,50 +243,50 @@ when 0 then
 # line 5 "json_value.rl"
 		begin
 
-       begin p = (( JsonString.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonString.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 1 then
 # line 9 "json_value.rl"
 		begin
 
-       begin p = (( JsonFloat.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonFloat.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 2 then
 # line 13 "json_value.rl"
 		begin
 
-       begin p = (( JsonArray.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonArray.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 3 then
 # line 17 "json_value.rl"
 		begin
 
-       begin p = (( JsonObject.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonObject.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 5 then
 # line 24 "json_value.rl"
 		begin
- o.t :null 		end
+ y << :null 		end
 when 6 then
 # line 25 "json_value.rl"
 		begin
- o.t :false 		end
+ y << :false 		end
 when 7 then
 # line 26 "json_value.rl"
 		begin
- o.t :true 		end
+ y << :true 		end
 when 8 then
 # line 28 "json_value.rl"
 		begin
- o.t :begin_string 		end
+ y << :begin_string 		end
 when 9 then
 # line 28 "json_value.rl"
 		begin
- o.t :end_string 		end
+ y << :end_string 		end
 # line 291 "json_value.rb"
 			end # action switch
 		end

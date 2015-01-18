@@ -8,6 +8,10 @@ valid_json = '["Valid JSON"]'
 invalid_json = '["Invalid" "JSON"]'
 incomplete_json = '["Incomplete JSON'
 
+class DummyOutputter
+  def process_token(*); end
+end
+
 def it_should_properly_handle(exception, options)
   io = Object.new.tap do |io|
     io.define_singleton_method :readpartial do |*|
@@ -16,13 +20,13 @@ def it_should_properly_handle(exception, options)
   end
 
   it "should return false upon #{exception.inspect}" do
-    assert_equal false, Jiffy.new(in: io, out: StringIO.new).cl_format(err: StringIO.new)
+    assert_equal false, Jiffy.new(in: io).cl_format(err: StringIO.new, outputter: DummyOutputter.new)
   end
 
   it "should write #{options[:with]} to :stderr upon #{exception.inspect}" do
     err = StringIO.new
 
-    Jiffy.new(in: io, out: StringIO.new).cl_format(err: err)
+    Jiffy.new(in: io).cl_format(err: err, outputter: DummyOutputter.new)
 
     assert_includes err.string, options[:with]
   end
@@ -30,97 +34,97 @@ def it_should_properly_handle(exception, options)
   it ":stderr should end with a newline upon #{exception.inspect}" do
     err = StringIO.new
 
-    Jiffy.new(in: io, out: StringIO.new).cl_format(err: err)
+    Jiffy.new(in: io).cl_format(err: err, outputter: DummyOutputter.new)
 
     assert_equal "\n", err.string[-1]
   end
 end
 
-def it_should_format(json)
-  it "should format #{json.inspect}" do
+def it_should_tokenize(json)
+  it "should tokenize #{json.inspect}" do
     begin
-      Jiffy.new(in: StringIO.new(json), out: StringIO.new).format
+      Jiffy.new(in: StringIO.new(json)).tokenize.to_a
     rescue Jiffy::UnexpectedEndError, Jiffy::UnparseableError
-      raise "should have parsed #{json.inspect}, but didn't"
+      raise "should have tokenized #{json.inspect}, but didn't"
     end
   end
 end
 
-def it_should_not_format(json)
-  it "should not format #{json.inspect}" do
+def it_should_not_tokenize(json)
+  it "should not tokenize #{json.inspect}" do
     assert_raises Jiffy::UnexpectedEndError, Jiffy::UnparseableError do
-      Jiffy.new(in: StringIO.new(json), out: StringIO.new).format
+      Jiffy.new(in: StringIO.new(json)).tokenize.to_a
     end
   end
 end
 
 describe Jiffy do
-  describe '#format' do
-    it_should_format '{}'
-    it_should_format '{"":{}}'
-    it_should_format '{"":"","":""}'
-    it_should_format '[]'
-    it_should_format '[[]]'
-    it_should_format '[{}]'
-    it_should_format '{"":[]}'
-    it_should_format '["",""]'
-    it_should_format '[false]'
-    it_should_format '[true]'
-    it_should_format '[null]'
-    it_should_format '["foo"]'
-    it_should_format '["\b"]'
-    it_should_format '["\r"]'
-    it_should_format '["\f"]'
-    it_should_format '["\t"]'
-    it_should_format '["\n"]'
-    it_should_format '["\""]'
-    it_should_format '["\\\\"]'
-    it_should_format '["\/"]'
-    it_should_format '["\u1111"]'
-    it_should_format '[100]'
-    it_should_format '[100e10]'
-    it_should_format '[100E10]'
-    it_should_format '[100e-10]'
-    it_should_format '[100E-10]'
-    it_should_format '[1.123]'
-    it_should_format '[1.123e10]'
-    it_should_format '[1.123E10]'
-    it_should_format '[1.123e-10]'
-    it_should_format '[1.123E-10]'
-    it_should_format '[-100]'
-    it_should_format '[-100e10]'
-    it_should_format '[-100E10]'
-    it_should_format '[-100e-10]'
-    it_should_format '[-100E-10]'
-    it_should_format '[-1.123]'
-    it_should_format '[-1.123e10]'
-    it_should_format '[-1.123E10]'
-    it_should_format '[-1.123e-10]'
-    it_should_format '[-1.123E-10]'
+  describe '#tokenize' do
+    it_should_tokenize '{}'
+    it_should_tokenize '{"":{}}'
+    it_should_tokenize '{"":"","":""}'
+    it_should_tokenize '[]'
+    it_should_tokenize '[[]]'
+    it_should_tokenize '[{}]'
+    it_should_tokenize '{"":[]}'
+    it_should_tokenize '["",""]'
+    it_should_tokenize '[false]'
+    it_should_tokenize '[true]'
+    it_should_tokenize '[null]'
+    it_should_tokenize '["foo"]'
+    it_should_tokenize '["\b"]'
+    it_should_tokenize '["\r"]'
+    it_should_tokenize '["\f"]'
+    it_should_tokenize '["\t"]'
+    it_should_tokenize '["\n"]'
+    it_should_tokenize '["\""]'
+    it_should_tokenize '["\\\\"]'
+    it_should_tokenize '["\/"]'
+    it_should_tokenize '["\u1111"]'
+    it_should_tokenize '[100]'
+    it_should_tokenize '[100e10]'
+    it_should_tokenize '[100E10]'
+    it_should_tokenize '[100e-10]'
+    it_should_tokenize '[100E-10]'
+    it_should_tokenize '[1.123]'
+    it_should_tokenize '[1.123e10]'
+    it_should_tokenize '[1.123E10]'
+    it_should_tokenize '[1.123e-10]'
+    it_should_tokenize '[1.123E-10]'
+    it_should_tokenize '[-100]'
+    it_should_tokenize '[-100e10]'
+    it_should_tokenize '[-100E10]'
+    it_should_tokenize '[-100e-10]'
+    it_should_tokenize '[-100E-10]'
+    it_should_tokenize '[-1.123]'
+    it_should_tokenize '[-1.123e10]'
+    it_should_tokenize '[-1.123E10]'
+    it_should_tokenize '[-1.123e-10]'
+    it_should_tokenize '[-1.123E-10]'
 
-    it_should_not_format '[0x00]'
-    it_should_not_format '[Infinity]'
-    it_should_not_format '[,""]'
-    it_should_not_format '["",]'
-    it_should_not_format '[01]'
-    it_should_not_format "[\"line\nbreak\"]"
-    it_should_not_format '{"" ""}'
-    it_should_not_format '[NaN]'
-    it_should_not_format '[+1.123]'
-    it_should_not_format '[+100]'
-    it_should_not_format "['single quoted string']"
-    it_should_not_format "[\"tab\tcharacter\"]"
-    it_should_not_format '{"":"",}'
-    it_should_not_format 'true'
-    it_should_not_format '""'
-    it_should_not_format '[true'
-    it_should_not_format '{"":""'
+    it_should_not_tokenize '[0x00]'
+    it_should_not_tokenize '[Infinity]'
+    it_should_not_tokenize '[,""]'
+    it_should_not_tokenize '["",]'
+    it_should_not_tokenize '[01]'
+    it_should_not_tokenize "[\"line\nbreak\"]"
+    it_should_not_tokenize '{"" ""}'
+    it_should_not_tokenize '[NaN]'
+    it_should_not_tokenize '[+1.123]'
+    it_should_not_tokenize '[+100]'
+    it_should_not_tokenize "['single quoted string']"
+    it_should_not_tokenize "[\"tab\tcharacter\"]"
+    it_should_not_tokenize '{"":"",}'
+    it_should_not_tokenize 'true'
+    it_should_not_tokenize '""'
+    it_should_not_tokenize '[true'
+    it_should_not_tokenize '{"":""'
 
     it 'should raise UnexpectedEndError on valid, but incomplete JSON input' do
       example = StringIO.new incomplete_json
 
       assert_raises Jiffy::UnexpectedEndError do
-        Jiffy.new(in: example, out: StringIO.new).format
+        Jiffy.new(in: example).tokenize.to_a
       end
     end
 
@@ -128,7 +132,7 @@ describe Jiffy do
       example = StringIO.new ""
 
       assert_raises Jiffy::UnexpectedEndError do
-        Jiffy.new(in: example, out: StringIO.new).format
+        Jiffy.new(in: example).tokenize.to_a
       end
     end
 
@@ -136,7 +140,7 @@ describe Jiffy do
       example = StringIO.new invalid_json
 
       assert_raises Jiffy::UnparseableError do
-        Jiffy.new(in: example, out: StringIO.new).format
+        Jiffy.new(in: example).tokenize.to_a
       end
     end
   end
@@ -173,7 +177,7 @@ describe Jiffy do
     it 'should return true upon valid input' do
       example = StringIO.new valid_json
 
-      assert_equal true, Jiffy.new(in: example, out: StringIO.new).cl_format
+      assert_equal true, Jiffy.new(in: example).cl_format(outputter: DummyOutputter.new)
     end
 
     it 'should not write to :stderr upon valid input' do
@@ -181,7 +185,7 @@ describe Jiffy do
 
       err = StringIO.new
 
-      Jiffy.new(in: example, out: StringIO.new).cl_format(err: err)
+      Jiffy.new(in: example).cl_format(err: err, outputter: DummyOutputter.new)
 
       assert_equal "", err.string
     end
@@ -191,7 +195,7 @@ describe Jiffy do
 
       out = StringIO.new
 
-      Jiffy.new(in: example, out: out).cl_format
+      Jiffy.new(in: example).cl_format(outputter: Jiffy::JsonOutputter.new(out: out))
 
       assert_equal "\n", out.string[-1]
     end

@@ -3,29 +3,29 @@
     include json_common "json_common.rl";
 
     action parse_string {
-      fexec JsonString.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonString.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action parse_number {
-      fexec JsonFloat.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonFloat.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action parse_array {
-      fexec JsonArray.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonArray.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action parse_object {
-      fexec JsonObject.new(p: p, data: data, outputter: outputter).parse;
+      fexec JsonObject.new(p: p, data: data, yielder: yielder).parse;
     }
 
     action exit { fhold; fbreak; }
 
     main := (
-        Vnull >{ o.t :null } |
-        Vfalse >{ o.t :false } |
-        Vtrue >{ o.t :true } |
+        Vnull >{ y << :null } |
+        Vfalse >{ y << :false } |
+        Vtrue >{ y << :true } |
         begin_number >parse_number |
-        begin_string >{ o.t :begin_string } >parse_string @{ o.t :end_string } |
+        begin_string >{ y << :begin_string } >parse_string @{ y << :end_string } |
         begin_array >parse_array |
         begin_object >parse_object
     ) %*exit;

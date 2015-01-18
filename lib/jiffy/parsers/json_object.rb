@@ -245,14 +245,14 @@ when 0 then
 # line 5 "json_object.rl"
 		begin
 
-       begin p = (( JsonValue.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonValue.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 1 then
 # line 9 "json_object.rl"
 		begin
 
-       begin p = (( JsonString.new(p: p, data: data, outputter: outputter).parse))-1; end
+       begin p = (( JsonString.new(p: p, data: data, yielder: yielder).parse))-1; end
 
     		end
 when 2 then
@@ -268,27 +268,27 @@ when 2 then
 when 3 then
 # line 15 "json_object.rl"
 		begin
- o.t :begin_string 		end
+ y << :begin_string 		end
 when 4 then
 # line 15 "json_object.rl"
 		begin
- o.t :end_string 		end
+ y << :end_string 		end
 when 5 then
 # line 15 "json_object.rl"
 		begin
- o.t :name_separator 		end
+ y << :name_separator 		end
 when 6 then
 # line 17 "json_object.rl"
 		begin
- o.t :value_separator 		end
+ y << :value_separator 		end
 when 7 then
 # line 20 "json_object.rl"
 		begin
- o.t :begin_object 		end
+ y << :begin_object 		end
 when 8 then
 # line 22 "json_object.rl"
 		begin
- o.t :end_object 		end
+ y << :end_object 		end
 # line 293 "json_object.rb"
 			end # action switch
 		end

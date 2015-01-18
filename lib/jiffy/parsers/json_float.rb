@@ -229,11 +229,11 @@ when 0 then
 when 1 then
 # line 7 "json_float.rl"
 		begin
- o.t :char, [data[p]].pack("c*") 		end
+ y << [:char, [data[p]].pack("c*")] 		end
 when 2 then
 # line 8 "json_float.rl"
 		begin
- o.t :number, [data[p]].pack("c*").to_i 		end
+ y << [:number, [data[p]].pack("c*").to_i] 		end
 # line 238 "json_float.rb"
 			end # action switch
 		end
