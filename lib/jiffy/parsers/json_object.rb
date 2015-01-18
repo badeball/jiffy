@@ -1,12 +1,12 @@
 
 # line 1 "json_object.rl"
 
-# line 36 "json_object.rl"
+# line 24 "json_object.rl"
 
 
 class Jiffy
   module Parsers
-    module JsonObject
+    class JsonObject < Parser
       def initialize(*args)
         
 # line 13 "json_object.rb"
@@ -140,22 +140,27 @@ end
 self.json_object_en_main = 1;
 
 
-# line 43 "json_object.rl"
+# line 31 "json_object.rl"
+
         super
       end
 
-      def parse_json_object(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
+
         
-# line 150 "json_object.rb"
+# line 155 "json_object.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_object_start
 end
 
-# line 48 "json_object.rl"
+# line 41 "json_object.rl"
         
-# line 159 "json_object.rb"
+# line 164 "json_object.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -240,42 +245,18 @@ when 0 then
 # line 5 "json_object.rl"
 		begin
 
-        np = parse_json_value(p, pe)
+       begin p = (( JsonValue.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-        if np
-             begin p = (( np))-1; end
-
-        else
-            p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
-        end
     		end
 when 1 then
-# line 15 "json_object.rl"
+# line 9 "json_object.rl"
 		begin
 
-        np = parse_json_string(p, pe)
+       begin p = (( JsonString.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-        if np
-             begin p = (( np))-1; end
-
-        else
-            p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
-        end
     		end
 when 2 then
-# line 25 "json_object.rl"
+# line 13 "json_object.rl"
 		begin
  p = p - 1; 	begin
 		p += 1
@@ -285,30 +266,30 @@ when 2 then
 	end
  		end
 when 3 then
-# line 27 "json_object.rl"
+# line 15 "json_object.rl"
 		begin
  o.t :begin_string 		end
 when 4 then
-# line 27 "json_object.rl"
+# line 15 "json_object.rl"
 		begin
  o.t :end_string 		end
 when 5 then
-# line 27 "json_object.rl"
+# line 15 "json_object.rl"
 		begin
  o.t :name_separator 		end
 when 6 then
-# line 29 "json_object.rl"
+# line 17 "json_object.rl"
 		begin
  o.t :value_separator 		end
 when 7 then
-# line 32 "json_object.rl"
+# line 20 "json_object.rl"
 		begin
  o.t :begin_object 		end
 when 8 then
-# line 34 "json_object.rl"
+# line 22 "json_object.rl"
 		begin
  o.t :end_object 		end
-# line 312 "json_object.rb"
+# line 293 "json_object.rb"
 			end # action switch
 		end
 	end
@@ -335,7 +316,7 @@ when 8 then
 	end
 	end
 
-# line 49 "json_object.rl"
+# line 42 "json_object.rl"
 
         if cs >= json_object_first_final
           p + 1

@@ -1,12 +1,12 @@
 
 # line 1 "json_value.rl"
 
-# line 56 "json_value.rl"
+# line 32 "json_value.rl"
 
 
 class Jiffy
   module Parsers
-    module JsonValue
+    class JsonValue < Parser
       def initialize(*args)
         
 # line 13 "json_value.rb"
@@ -116,22 +116,27 @@ end
 self.json_value_en_main = 1;
 
 
-# line 63 "json_value.rl"
+# line 39 "json_value.rl"
+
         super
       end
 
-      def parse_json_value(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
+
         
-# line 126 "json_value.rb"
+# line 131 "json_value.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_value_start
 end
 
-# line 68 "json_value.rl"
+# line 49 "json_value.rl"
         
-# line 135 "json_value.rb"
+# line 140 "json_value.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -161,7 +166,7 @@ begin
 		_acts += 1
 		case _json_value_actions[_acts - 1]
 			when 4 then
-# line 45 "json_value.rl"
+# line 21 "json_value.rl"
 		begin
  p = p - 1; 	begin
 		p += 1
@@ -170,7 +175,7 @@ begin
 		break
 	end
  		end
-# line 174 "json_value.rb"
+# line 179 "json_value.rb"
 		end # from state action switch
 	end
 	if _trigger_goto
@@ -238,75 +243,51 @@ when 0 then
 # line 5 "json_value.rl"
 		begin
 
-      np = parse_json_string(p, pe)
+       begin p = (( JsonString.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      if np
-         begin p = (( np))-1; end
-
-      else
-        raise_unparseable p
-      end
     		end
 when 1 then
-# line 15 "json_value.rl"
+# line 9 "json_value.rl"
 		begin
 
-      np = parse_json_float(p, pe)
+       begin p = (( JsonFloat.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      if np
-         begin p = (( np))-1; end
-
-      else
-        raise_unparseable p
-      end
     		end
 when 2 then
-# line 25 "json_value.rl"
+# line 13 "json_value.rl"
 		begin
 
-      np = parse_json_array(p, pe)
+       begin p = (( JsonArray.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      if np
-         begin p = (( np))-1; end
-
-      else
-        raise_unparseable p
-      end
     		end
 when 3 then
-# line 35 "json_value.rl"
+# line 17 "json_value.rl"
 		begin
 
-      np = parse_json_object(p, pe)
+       begin p = (( JsonObject.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      if np
-         begin p = (( np))-1; end
-
-      else
-        raise_unparseable p
-      end
     		end
 when 5 then
-# line 48 "json_value.rl"
+# line 24 "json_value.rl"
 		begin
  o.t :null 		end
 when 6 then
-# line 49 "json_value.rl"
+# line 25 "json_value.rl"
 		begin
  o.t :false 		end
 when 7 then
-# line 50 "json_value.rl"
+# line 26 "json_value.rl"
 		begin
  o.t :true 		end
 when 8 then
-# line 52 "json_value.rl"
+# line 28 "json_value.rl"
 		begin
  o.t :begin_string 		end
 when 9 then
-# line 52 "json_value.rl"
+# line 28 "json_value.rl"
 		begin
  o.t :end_string 		end
-# line 310 "json_value.rb"
+# line 291 "json_value.rb"
 			end # action switch
 		end
 	end
@@ -333,7 +314,7 @@ when 9 then
 	end
 	end
 
-# line 69 "json_value.rl"
+# line 50 "json_value.rl"
 
         if cs >= json_value_first_final
           p

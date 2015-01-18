@@ -18,13 +18,17 @@
 
 class Jiffy
   module Parsers
-    module JsonString
+    class JsonString < Parser
       def initialize(*args)
         %% write data;
+
         super
       end
 
-      def parse_json_string(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
 
         %% write init;
         %% write exec;

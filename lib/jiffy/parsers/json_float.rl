@@ -16,19 +16,25 @@
 
 class Jiffy
   module Parsers
-    module JsonFloat
+    class JsonFloat < Parser
       def initialize(*args)
         %% write data;
+
         super
       end
 
-      def parse_json_float(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
 
         %% write init;
         %% write exec;
 
         if cs >= json_float_first_final
           p
+        else
+          raise_unparseable p
         end
       end
     end

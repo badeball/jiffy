@@ -3,23 +3,11 @@
     include json_common "json_common.rl";
 
     action parse_value {
-        np = parse_json_value(fpc, pe)
-
-        if np
-            fexec np;
-        else
-            fhold; fbreak;
-        end
+      fexec JsonValue.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action parse_name {
-        np = parse_json_string(fpc, pe)
-
-        if np
-            fexec np;
-        else
-            fhold; fbreak;
-        end
+      fexec JsonString.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action exit { fhold; fbreak; }
@@ -37,13 +25,18 @@
 
 class Jiffy
   module Parsers
-    module JsonObject
+    class JsonObject < Parser
       def initialize(*args)
         %% write data;
+
         super
       end
 
-      def parse_json_object(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
+
         %% write init;
         %% write exec;
 

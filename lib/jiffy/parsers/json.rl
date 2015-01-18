@@ -3,21 +3,11 @@
     include json_common "json_common.rl";
 
     action parse_object {
-      if np = parse_json_object(fpc, pe)
-        fexec np;
-      else
-        fhold;
-        fbreak;
-      end
+      fexec JsonObject.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action parse_array {
-      if np = parse_json_array(fpc, pe)
-        fexec np;
-      else
-        fhold;
-        fbreak;
-      end
+      fexec JsonArray.new(p: p, data: data, outputter: outputter).parse;
     }
 
     main := ignore* (
@@ -28,26 +18,24 @@
 
 class Jiffy
   module Parsers
-    module Json
+    class Json < Parser
       def initialize(*args)
         %% write data;
+
         super
       end
 
-      def parse_json
+      def parse
         pe = :ignored
         eof = :ignored
+        p = self.p
 
-        begin
-          %% write init;
-          %% write exec;
-        rescue EOFError
-          if p < data.bytes_read || data.bytes_read == 0
-            raise UnexpectedEndError, 'Unexpected end of input'
-          end
-        end
+        %% write init;
+        %% write exec;
 
         raise_unparseable p unless p == data.bytes_read
+      ensure
+        self.p = p
       end
     end
   end

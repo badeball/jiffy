@@ -1,12 +1,12 @@
 
 # line 1 "json_array.rl"
 
-# line 23 "json_array.rl"
+# line 17 "json_array.rl"
 
 
 class Jiffy
   module Parsers
-    module JsonArray
+    class JsonArray < Parser
       def initialize(*args)
         
 # line 13 "json_array.rb"
@@ -129,22 +129,27 @@ end
 self.json_array_en_main = 1;
 
 
-# line 30 "json_array.rl"
+# line 24 "json_array.rl"
+
         super
       end
 
-      def parse_json_array(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
+
         
-# line 139 "json_array.rb"
+# line 144 "json_array.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_array_start
 end
 
-# line 35 "json_array.rl"
+# line 34 "json_array.rl"
         
-# line 148 "json_array.rb"
+# line 153 "json_array.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -229,23 +234,11 @@ when 0 then
 # line 5 "json_array.rl"
 		begin
 
-      np = parse_json_value(p, pe)
+       begin p = (( JsonValue.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      if np
-         begin p = (( np))-1; end
-
-      else
-        p = p - 1; 	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
-      end
     		end
 when 1 then
-# line 15 "json_array.rl"
+# line 9 "json_array.rl"
 		begin
  p = p - 1; 	begin
 		p += 1
@@ -255,18 +248,18 @@ when 1 then
 	end
  		end
 when 2 then
-# line 17 "json_array.rl"
+# line 11 "json_array.rl"
 		begin
  o.t :value_separator 		end
 when 3 then
-# line 19 "json_array.rl"
+# line 13 "json_array.rl"
 		begin
  o.t :begin_array 		end
 when 4 then
-# line 22 "json_array.rl"
+# line 16 "json_array.rl"
 		begin
  o.t :end_array 		end
-# line 270 "json_array.rb"
+# line 263 "json_array.rb"
 			end # action switch
 		end
 	end
@@ -293,7 +286,7 @@ when 4 then
 	end
 	end
 
-# line 36 "json_array.rl"
+# line 35 "json_array.rl"
 
         if cs >= json_array_first_final
           p + 1

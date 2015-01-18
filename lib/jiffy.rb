@@ -1,31 +1,16 @@
+require 'jiffy/array_mimicking_io'
+require 'jiffy/json_outputter'
+require 'jiffy/parser'
 require 'jiffy/parsers/json'
 require 'jiffy/parsers/json_array'
 require 'jiffy/parsers/json_float'
 require 'jiffy/parsers/json_object'
 require 'jiffy/parsers/json_string'
 require 'jiffy/parsers/json_value'
-require 'jiffy/array_mimicking_io'
-require 'jiffy/json_outputter'
 
 class Jiffy
   class UnparseableError < StandardError; end
   class UnexpectedEndError < StandardError; end
-
-  class << self
-    attr_accessor :json_start
-  end
-
-  prepend Parsers::Json
-  prepend Parsers::JsonArray
-  prepend Parsers::JsonFloat
-  prepend Parsers::JsonObject
-  prepend Parsers::JsonString
-  prepend Parsers::JsonValue
-
-  attr_accessor :io, :data, :outputter
-
-  alias_method :o, :outputter
-  alias_method :format, :parse_json
 
   def initialize(options = {})
     if options[:in].is_a?(String)
@@ -39,6 +24,15 @@ class Jiffy
     @data = ArrayMimickingIO.new(@io)
 
     @outputter = JsonOutputter.new(options)
+  end
+
+  def format
+    parser = Parsers::Json.new(p: 0, data: @data, outputter: @outputter)
+    parser.parse
+  rescue EOFError
+    if parser.p < @data.bytes_read || @data.bytes_read == 0
+      raise UnexpectedEndError, 'Unexpected end of input'
+    end
   end
 
   def cl_format(options = {})
@@ -83,11 +77,5 @@ class Jiffy
     err.write e.message << "\n"
 
     false
-  end
-
-  private
-
-  def raise_unparseable(p)
-    raise UnparseableError, "Unexpected token at position #{p}"
   end
 end

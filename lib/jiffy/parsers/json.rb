@@ -1,12 +1,12 @@
 
 # line 1 "json.rl"
 
-# line 27 "json.rl"
+# line 17 "json.rl"
 
 
 class Jiffy
   module Parsers
-    module Json
+    class Json < Parser
       def initialize(*args)
         
 # line 13 "json.rb"
@@ -114,26 +114,27 @@ end
 self.json_en_main = 1;
 
 
-# line 34 "json.rl"
+# line 24 "json.rl"
+
         super
       end
 
-      def parse_json
+      def parse
         pe = :ignored
         eof = :ignored
+        p = self.p
 
-        begin
-          
-# line 128 "json.rb"
+        
+# line 129 "json.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_start
 end
 
-# line 43 "json.rl"
-          
-# line 137 "json.rb"
+# line 34 "json.rl"
+        
+# line 138 "json.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -218,39 +219,17 @@ when 0 then
 # line 5 "json.rl"
 		begin
 
-      if np = parse_json_object(p, pe)
-         begin p = (( np))-1; end
+       begin p = (( JsonObject.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      else
-        p = p - 1;
-        	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
-      end
     		end
 when 1 then
-# line 14 "json.rl"
+# line 9 "json.rl"
 		begin
 
-      if np = parse_json_array(p, pe)
-         begin p = (( np))-1; end
+       begin p = (( JsonArray.new(p: p, data: data, outputter: outputter).parse))-1; end
 
-      else
-        p = p - 1;
-        	begin
-		p += 1
-		_trigger_goto = true
-		_goto_level = _out
-		break
-	end
-
-      end
     		end
-# line 254 "json.rb"
+# line 233 "json.rb"
 			end # action switch
 		end
 	end
@@ -277,14 +256,11 @@ when 1 then
 	end
 	end
 
-# line 44 "json.rl"
-        rescue EOFError
-          if p < data.bytes_read || data.bytes_read == 0
-            raise UnexpectedEndError, 'Unexpected end of input'
-          end
-        end
+# line 35 "json.rl"
 
         raise_unparseable p unless p == data.bytes_read
+      ensure
+        self.p = p
       end
     end
   end

@@ -3,43 +3,19 @@
     include json_common "json_common.rl";
 
     action parse_string {
-      np = parse_json_string(fpc, pe)
-
-      if np
-        fexec np;
-      else
-        raise_unparseable p
-      end
+      fexec JsonString.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action parse_number {
-      np = parse_json_float(fpc, pe)
-
-      if np
-        fexec np;
-      else
-        raise_unparseable p
-      end
+      fexec JsonFloat.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action parse_array {
-      np = parse_json_array(fpc, pe)
-
-      if np
-        fexec np;
-      else
-        raise_unparseable p
-      end
+      fexec JsonArray.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action parse_object {
-      np = parse_json_object(fpc, pe)
-
-      if np
-        fexec np;
-      else
-        raise_unparseable p
-      end
+      fexec JsonObject.new(p: p, data: data, outputter: outputter).parse;
     }
 
     action exit { fhold; fbreak; }
@@ -57,13 +33,18 @@
 
 class Jiffy
   module Parsers
-    module JsonValue
+    class JsonValue < Parser
       def initialize(*args)
         %% write data;
+
         super
       end
 
-      def parse_json_value(p, pe)
+      def parse
+        pe = :ignored
+        eof = :ignored
+        p = self.p
+
         %% write init;
         %% write exec;
 
