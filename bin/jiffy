@@ -14,7 +14,7 @@ opts = OptionParser.new do |opts|
     exit
   end
 
-  opts.on_tail("-v", "--version", "Print the version number of format-json") do
+  opts.on_tail("-v", "--version", "Print the version number of jiffy") do
     puts "jiffy #{Jiffy::VERSION}"
     exit
   end
