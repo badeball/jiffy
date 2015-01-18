@@ -23,7 +23,6 @@ class Jiffy
       end
 
       def parse_json_float(p, pe)
-        t_p = p
 
         %% write init;
         %% write exec;

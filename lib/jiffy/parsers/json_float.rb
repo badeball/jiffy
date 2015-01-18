@@ -120,19 +120,18 @@ self.json_float_en_main = 1;
       end
 
       def parse_json_float(p, pe)
-        t_p = p
 
         
-# line 127 "json_float.rb"
+# line 126 "json_float.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_float_start
 end
 
-# line 29 "json_float.rl"
+# line 28 "json_float.rl"
         
-# line 136 "json_float.rb"
+# line 135 "json_float.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -231,7 +230,7 @@ when 2 then
 # line 8 "json_float.rl"
 		begin
  o.t :number, [data[p]].pack("c*").to_i 		end
-# line 235 "json_float.rb"
+# line 234 "json_float.rb"
 			end # action switch
 		end
 	end
@@ -258,7 +257,7 @@ when 2 then
 	end
 	end
 
-# line 30 "json_float.rl"
+# line 29 "json_float.rl"
 
         if cs >= json_float_first_final
           p

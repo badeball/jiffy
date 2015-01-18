@@ -25,7 +25,6 @@ class Jiffy
       end
 
       def parse_json_string(p, pe)
-        t_p = p + 1
 
         %% write init;
         %% write exec;

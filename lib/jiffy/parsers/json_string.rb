@@ -120,19 +120,18 @@ self.json_string_en_main = 1;
       end
 
       def parse_json_string(p, pe)
-        t_p = p + 1
 
         
-# line 127 "json_string.rb"
+# line 126 "json_string.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_string_start
 end
 
-# line 31 "json_string.rl"
+# line 30 "json_string.rl"
         
-# line 136 "json_string.rb"
+# line 135 "json_string.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -227,7 +226,7 @@ when 1 then
 # line 7 "json_string.rl"
 		begin
  o.t :char, [data[p]].pack("c*") 		end
-# line 231 "json_string.rb"
+# line 230 "json_string.rb"
 			end # action switch
 		end
 	end
@@ -254,7 +253,7 @@ when 1 then
 	end
 	end
 
-# line 32 "json_string.rl"
+# line 31 "json_string.rl"
 
         if cs >= json_string_first_final
           p + 1
