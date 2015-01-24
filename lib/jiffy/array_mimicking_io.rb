@@ -29,7 +29,7 @@ class Jiffy
     end
 
     def read_chunk
-      @chunk = @io.readpartial(CHUNK_SIZE).codepoints
+      @chunk = @io.readpartial(CHUNK_SIZE).each_codepoint.to_a
 
       @bytes_read += @chunk.length
     end
