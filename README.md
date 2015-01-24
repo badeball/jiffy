@@ -2,6 +2,8 @@ Jiffy
 =====
 
 [![Build Status](https://travis-ci.org/badeball/jiffy.png)](https://travis-ci.org/badeball/jiffy)
+[![Test Coverage](https://codeclimate.com/github/badeball/jiffy/badges/coverage.svg)](https://codeclimate.com/github/badeball/jiffy)
+[![Code Climate](https://codeclimate.com/github/badeball/jiffy/badges/gpa.svg)](https://codeclimate.com/github/badeball/jiffy)
 
 A streaming-based JSON formatter in Ruby that utilizes Ragel in order to parse
 and continuously format JSON data. This allows it to achieve a somewhat
