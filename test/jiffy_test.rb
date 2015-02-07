@@ -38,13 +38,9 @@ def it_should_properly_handle(exception, options)
   end
 end
 
-def it_should_tokenize(json)
-  it "should tokenize #{json.inspect}" do
-    begin
-      Jiffy.new(in: StringIO.new(json)).tokenize.to_a
-    rescue Jiffy::UnexpectedEndError, Jiffy::UnparseableError
-      raise "should have tokenized #{json.inspect}, but didn't"
-    end
+def it_should_tokenize(json, *tokens)
+  it "should tokenize #{json.inspect} to #{tokens.map(&:inspect).join ', '}" do
+    assert_equal tokens, Jiffy.new(in: StringIO.new(json)).tokenize.to_a
   end
 end
 
@@ -58,47 +54,393 @@ end
 
 describe Jiffy do
   describe '#tokenize' do
-    it_should_tokenize '{}'
-    it_should_tokenize '{"":{}}'
-    it_should_tokenize '{"":"","":""}'
-    it_should_tokenize '[]'
-    it_should_tokenize '[[]]'
-    it_should_tokenize '[{}]'
-    it_should_tokenize '{"":[]}'
-    it_should_tokenize '["",""]'
-    it_should_tokenize '[false]'
-    it_should_tokenize '[true]'
-    it_should_tokenize '[null]'
-    it_should_tokenize '["foo"]'
-    it_should_tokenize '["\b"]'
-    it_should_tokenize '["\r"]'
-    it_should_tokenize '["\f"]'
-    it_should_tokenize '["\t"]'
-    it_should_tokenize '["\n"]'
-    it_should_tokenize '["\""]'
-    it_should_tokenize '["\\\\"]'
-    it_should_tokenize '["\/"]'
-    it_should_tokenize '["\u1111"]'
-    it_should_tokenize '[100]'
-    it_should_tokenize '[100e10]'
-    it_should_tokenize '[100E10]'
-    it_should_tokenize '[100e-10]'
-    it_should_tokenize '[100E-10]'
-    it_should_tokenize '[1.123]'
-    it_should_tokenize '[1.123e10]'
-    it_should_tokenize '[1.123E10]'
-    it_should_tokenize '[1.123e-10]'
-    it_should_tokenize '[1.123E-10]'
-    it_should_tokenize '[-100]'
-    it_should_tokenize '[-100e10]'
-    it_should_tokenize '[-100E10]'
-    it_should_tokenize '[-100e-10]'
-    it_should_tokenize '[-100E-10]'
-    it_should_tokenize '[-1.123]'
-    it_should_tokenize '[-1.123e10]'
-    it_should_tokenize '[-1.123E10]'
-    it_should_tokenize '[-1.123e-10]'
-    it_should_tokenize '[-1.123E-10]'
+    it_should_tokenize '{}',
+      :begin_object,
+      :end_object
+
+    it_should_tokenize '{"":{}}',
+      :begin_object,
+      :begin_string,
+      :end_string,
+      :name_separator,
+      :begin_object,
+      :end_object,
+      :end_object
+
+    it_should_tokenize '{"":"","":""}',
+      :begin_object,
+      :begin_string,
+      :end_string,
+      :name_separator,
+      :begin_string,
+      :end_string,
+      :value_separator,
+      :begin_string,
+      :end_string,
+      :name_separator,
+      :begin_string,
+      :end_string,
+      :end_object
+
+    it_should_tokenize '[]',
+      :begin_array,
+      :end_array
+
+    it_should_tokenize '[[]]',
+      :begin_array,
+      :begin_array,
+      :end_array,
+      :end_array
+
+    it_should_tokenize '[{}]',
+      :begin_array,
+      :begin_object,
+      :end_object,
+      :end_array
+
+    it_should_tokenize '{"":[]}',
+      :begin_object,
+      :begin_string,
+      :end_string,
+      :name_separator,
+      :begin_array,
+      :end_array,
+      :end_object
+
+    it_should_tokenize '["",""]',
+      :begin_array,
+      :begin_string,
+      :end_string,
+      :value_separator,
+      :begin_string,
+      :end_string,
+      :end_array
+
+    it_should_tokenize '[false]',
+      :begin_array,
+      :false,
+      :end_array
+
+    it_should_tokenize '[true]',
+      :begin_array,
+      :true,
+      :end_array
+
+    it_should_tokenize '[null]',
+      :begin_array,
+      :null,
+      :end_array
+
+    it_should_tokenize '["foo"]',
+      :begin_array,
+      :begin_string,
+      [:char, "f"],
+      [:char, "o"],
+      [:char, "o"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\b"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "b"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\r"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "r"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\f"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "f"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\t"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "t"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\n"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "n"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\""]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "\""],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\\\\"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "\\"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\/"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "/"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '["\u1111"]',
+      :begin_array,
+      :begin_string,
+      [:char, "\\"],
+      [:char, "u"],
+      [:char, "1"],
+      [:char, "1"],
+      [:char, "1"],
+      [:char, "1"],
+      :end_string,
+      :end_array
+
+    it_should_tokenize '[100]',
+      :begin_array,
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[100e10]',
+      :begin_array,
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "e"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[100E10]',
+      :begin_array,
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "E"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[100e-10]',
+      :begin_array,
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "e"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[100E-10]',
+      :begin_array,
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "E"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[1.123]',
+      :begin_array,
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      :end_array
+
+    it_should_tokenize '[1.123e10]',
+      :begin_array,
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "e"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[1.123E10]',
+      :begin_array,
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "E"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[1.123e-10]',
+      :begin_array,
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "e"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[1.123E-10]',
+      :begin_array,
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "E"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-100]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-100e10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "e"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-100E10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "E"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-100e-10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "e"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-100E-10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      [:number, 0],
+      [:char, "E"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-1.123]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      :end_array
+
+    it_should_tokenize '[-1.123e10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "e"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-1.123E10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "E"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-1.123e-10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "e"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
+    it_should_tokenize '[-1.123E-10]',
+      :begin_array,
+      [:char, "-"],
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      [:char, "E"],
+      [:char, "-"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
 
     it_should_not_tokenize '[0x00]'
     it_should_not_tokenize '[Infinity]'
