@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     lib/jiffy/array_mimicking_io.rb
     lib/jiffy/outputter.rb
     lib/jiffy/outputters/json.rb
+    lib/jiffy/outputters/ruby.rb
     lib/jiffy/version.rb
     lib/jiffy.rb
     test/jiffy_test.rb

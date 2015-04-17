@@ -4,10 +4,18 @@ require 'optparse'
 require 'jiffy'
 require 'jiffy/version'
 
+options = {
+  outputter: "json"
+}
+
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: jiffy [options] [FILE]"
   opts.separator "Standard input is read when FILE is not present"
   opts.separator ""
+
+  opts.on_tail("-oNAME", "--output=NAME", ["json", "ruby"], "which format to output (json, ruby)") do |outputter|
+    options[:outputter] = outputter
+  end
 
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
@@ -36,10 +44,17 @@ Signal.trap("PIPE") do
   exit 141
 end
 
+outputter = case options[:outputter]
+            when "json"
+              Jiffy::Outputters::Json
+            when "ruby"
+              Jiffy::Outputters::Ruby
+            end
+
 result = if ARGV.empty?
-           Jiffy.new(in: STDIN).cl_format(outputter: Jiffy::JsonOutputter.new)
+           Jiffy.new(in: STDIN).cl_format(outputter: outputter.new)
          else
-           Jiffy.new(in: ARGF).cl_format(outputter: Jiffy::JsonOutputter.new)
+           Jiffy.new(in: ARGF).cl_format(outputter: outputter.new)
          end
 
 exit 1 unless result
