@@ -37,9 +37,9 @@ Signal.trap("PIPE") do
 end
 
 result = if ARGV.empty?
-           Jiffy.new(in: STDIN).cl_format(outputter: Jiffy::JsonOutputter.new, err: STDERR)
+           Jiffy.new(in: STDIN).cl_format(outputter: Jiffy::JsonOutputter.new)
          else
-           Jiffy.new(in: ARGF).cl_format(outputter: Jiffy::JsonOutputter.new, err: STDERR)
+           Jiffy.new(in: ARGF).cl_format(outputter: Jiffy::JsonOutputter.new)
          end
 
 exit 1 unless result
