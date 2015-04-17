@@ -7,6 +7,8 @@ class Jiffy
       rule :end_array, :payload => "]", :indent => -1, :break_before => true
       rule :value_separator, :payload => ",", :break_after => true
       rule :name_separator, :payload => ": "
+      rule :begin_name, :payload => "\""
+      rule :end_name, :payload => "\""
       rule :begin_string, :payload => "\""
       rule :end_string, :payload => "\""
       rule :null, :payload =>  "null"

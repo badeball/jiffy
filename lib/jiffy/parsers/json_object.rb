@@ -268,11 +268,11 @@ when 2 then
 when 3 then
 # line 15 "json_object.rl"
 		begin
- y << :begin_string 		end
+ y << :begin_name 		end
 when 4 then
 # line 15 "json_object.rl"
 		begin
- y << :end_string 		end
+ y << :end_name 		end
 when 5 then
 # line 15 "json_object.rl"
 		begin

@@ -12,7 +12,7 @@
 
     action exit { fhold; fbreak; }
 
-    pair = ignore* begin_name >{ y << :begin_string } >parse_name @{ y << :end_string } ignore* name_separator >{ y << :name_separator } ignore* begin_value >parse_value;
+    pair = ignore* begin_name >{ y << :begin_name } >parse_name @{ y << :end_name } ignore* name_separator >{ y << :name_separator } ignore* begin_value >parse_value;
 
     next_pair = ignore* value_separator >{ y << :value_separator } pair;
 
