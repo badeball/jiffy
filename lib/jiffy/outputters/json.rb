@@ -1,62 +1,21 @@
 class Jiffy
   module Outputters
-    class Json
-      attr_accessor :out, :indent
-
-      def initialize(options = {})
-        self.out = options[:out] || $stdout
-
-        raise ArgumentError, 'Invalid output source' unless out.respond_to? :print
-
-        self.indent = 0
-      end
-
-      def process_token(token, payload = nil)
-        case token
-          when :begin_object
-            output '{', indent: 1, newline_after: true
-          when :end_object
-            output '}', indent: -1, newline_before: true
-          when :begin_array
-            output '[', indent: 1, newline_after: true
-          when :end_array
-            output ']', indent: -1, newline_before: true
-          when :value_separator
-            output ',', newline_after: true
-          when :name_separator
-            output ': '
-          when :begin_string, :end_string
-            output '"'
-          when :null
-            output 'null'
-          when :nan
-            output 'NaN'
-          when :inf
-            output 'Infinity'
-          when :true
-            output 'true'
-          when :false
-            output 'false'
-          when :char
-            output payload
-          when :number
-            output payload.to_s
-          else
-            puts "Unknown token: #{token.inspect}"
-        end
-      end
-
-      def output(content, options = {})
-        self.indent += options[:indent] if options[:indent]
-
-        if options[:newline_before]
-          out.print "\n" << '  ' * self.indent
-        end
-
-        out.print content
-
-        out.print "\n" << '  ' * self.indent if options[:newline_after]
-      end
+    class Json < Outputter
+      rule :begin_object, :payload => "{", :indent => 1, :break_after => true
+      rule :end_object, :payload => "}", :indent => -1, :break_before => true
+      rule :begin_array, :payload => "[", :indent => 1, :break_after => true
+      rule :end_array, :payload => "]", :indent => -1, :break_before => true
+      rule :value_separator, :payload => ",", :break_after => true
+      rule :name_separator, :payload => ": "
+      rule :begin_string, :payload => "\""
+      rule :end_string, :payload => "\""
+      rule :null, :payload =>  "null"
+      rule :nan, :payload =>  "NaN"
+      rule :inf, :payload =>  "Infinity"
+      rule :true, :payload =>  "true"
+      rule :false, :payload =>  "false"
+      rule :char
+      rule :number
     end
   end
 end

@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     lib/jiffy/parsers/json_value.rb
     lib/jiffy/parsers/json_value.rl
     lib/jiffy/array_mimicking_io.rb
+    lib/jiffy/outputter.rb
     lib/jiffy/outputters/json.rb
     lib/jiffy/version.rb
     lib/jiffy.rb
