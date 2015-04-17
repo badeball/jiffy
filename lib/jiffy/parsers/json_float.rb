@@ -1,7 +1,7 @@
 
 # line 1 "json_float.rl"
 
-# line 15 "json_float.rl"
+# line 16 "json_float.rl"
 
 
 class Jiffy
@@ -15,7 +15,8 @@ class << self
 	private :_json_float_actions, :_json_float_actions=
 end
 self._json_float_actions = [
-	0, 1, 0, 1, 1, 1, 2
+	0, 1, 0, 1, 1, 1, 2, 1, 
+	3
 ]
 
 class << self
@@ -93,7 +94,7 @@ class << self
 end
 self._json_float_trans_actions = [
 	3, 0, 5, 5, 5, 3, 5, 1, 
-	3, 3
+	3, 7
 ]
 
 class << self
@@ -115,7 +116,7 @@ end
 self.json_float_en_main = 1;
 
 
-# line 22 "json_float.rl"
+# line 23 "json_float.rl"
 
         super
       end
@@ -126,16 +127,16 @@ self.json_float_en_main = 1;
         p = self.p
 
         
-# line 130 "json_float.rb"
+# line 131 "json_float.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_float_start
 end
 
-# line 32 "json_float.rl"
+# line 33 "json_float.rl"
         
-# line 139 "json_float.rb"
+# line 140 "json_float.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -234,7 +235,11 @@ when 2 then
 # line 8 "json_float.rl"
 		begin
  y << [:number, [data[p]].pack("c*").to_i] 		end
-# line 238 "json_float.rb"
+when 3 then
+# line 9 "json_float.rl"
+		begin
+ y << :exponent 		end
+# line 243 "json_float.rb"
 			end # action switch
 		end
 	end
@@ -261,7 +266,7 @@ when 2 then
 	end
 	end
 
-# line 33 "json_float.rl"
+# line 34 "json_float.rl"
 
         if cs >= json_float_first_final
           p
