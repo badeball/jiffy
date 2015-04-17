@@ -6,7 +6,8 @@ require 'jiffy/version'
 
 options = {
   indent_size: 2,
-  outputter: "json"
+  outputter: "json",
+  color: STDOUT.tty?
 }
 
 opts = OptionParser.new do |opts|
@@ -20,6 +21,10 @@ opts = OptionParser.new do |opts|
 
   opts.on_tail("-oNAME", "--output=NAME", ["json", "ruby"], "which format to output (json, ruby)") do |outputter|
     options[:outputter] = outputter
+  end
+
+  opts.on_tail("-c", "--[no-]color", "colorize the output") do |color|
+    options[:color] = color
   end
 
   opts.on_tail("-h", "--help", "Show this message") do
