@@ -17,6 +17,8 @@ class Jiffy
       rule :char
       rule :number
       rule :exponent, :payload => "e"
+      rule :minus, :payload => "-"
+      rule :plus, :payload => "+"
     end
   end
 end

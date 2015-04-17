@@ -1,7 +1,7 @@
 
 # line 1 "json_float.rl"
 
-# line 16 "json_float.rl"
+# line 18 "json_float.rl"
 
 
 class Jiffy
@@ -16,7 +16,7 @@ class << self
 end
 self._json_float_actions = [
 	0, 1, 0, 1, 1, 1, 2, 1, 
-	3
+	3, 1, 4, 1, 5
 ]
 
 class << self
@@ -73,10 +73,10 @@ class << self
 end
 self._json_float_indicies = [
 	0, 2, 3, 1, 2, 3, 1, 4, 
-	1, 5, 5, 6, 1, 6, 1, 1, 
-	8, 9, 9, 1, 7, 1, 9, 9, 
-	1, 4, 7, 1, 1, 1, 6, 7, 
-	1, 8, 9, 9, 3, 7, 0
+	1, 5, 6, 7, 1, 7, 1, 1, 
+	9, 10, 10, 1, 8, 1, 10, 10, 
+	1, 4, 8, 1, 1, 1, 7, 8, 
+	1, 9, 10, 10, 3, 8, 0
 ]
 
 class << self
@@ -84,8 +84,8 @@ class << self
 	private :_json_float_trans_targs, :_json_float_trans_targs=
 end
 self._json_float_trans_targs = [
-	2, 0, 6, 10, 8, 5, 9, 7, 
-	3, 4
+	2, 0, 6, 10, 8, 5, 5, 9, 
+	7, 3, 4
 ]
 
 class << self
@@ -93,8 +93,8 @@ class << self
 	private :_json_float_trans_actions, :_json_float_trans_actions=
 end
 self._json_float_trans_actions = [
-	3, 0, 5, 5, 5, 3, 5, 1, 
-	3, 7
+	9, 0, 5, 5, 5, 11, 9, 5, 
+	1, 3, 7
 ]
 
 class << self
@@ -116,7 +116,7 @@ end
 self.json_float_en_main = 1;
 
 
-# line 23 "json_float.rl"
+# line 25 "json_float.rl"
 
         super
       end
@@ -134,7 +134,7 @@ begin
 	cs = json_float_start
 end
 
-# line 33 "json_float.rl"
+# line 35 "json_float.rl"
         
 # line 140 "json_float.rb"
 begin
@@ -239,7 +239,15 @@ when 3 then
 # line 9 "json_float.rl"
 		begin
  y << :exponent 		end
-# line 243 "json_float.rb"
+when 4 then
+# line 10 "json_float.rl"
+		begin
+ y << :minus 		end
+when 5 then
+# line 11 "json_float.rl"
+		begin
+ y << :plus 		end
+# line 251 "json_float.rb"
 			end # action switch
 		end
 	end
@@ -266,7 +274,7 @@ when 3 then
 	end
 	end
 
-# line 34 "json_float.rl"
+# line 36 "json_float.rl"
 
         if cs >= json_float_first_final
           p

@@ -218,7 +218,7 @@ describe Jiffy do
 
     it_should_tokenize '[-100]',
       :begin_array,
-      [:char, "-"],
+      :minus,
       [:number, 1],
       [:number, 0],
       [:number, 0],
@@ -247,14 +247,14 @@ describe Jiffy do
 
     it_should_tokenize '[-1.123e-10]',
       :begin_array,
-      [:char, "-"],
+      :minus,
       [:number, 1],
       [:char, "."],
       [:number, 1],
       [:number, 2],
       [:number, 3],
       :exponent,
-      [:char, "-"],
+      :minus,
       [:number, 1],
       [:number, 0],
       :end_array
@@ -267,7 +267,7 @@ describe Jiffy do
       [:number, 2],
       [:number, 3],
       :exponent,
-      [:char, "+"],
+      :plus,
       [:number, 1],
       [:number, 0],
       :end_array
