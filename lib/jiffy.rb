@@ -1,5 +1,5 @@
 require 'jiffy/array_mimicking_io'
-require 'jiffy/json_outputter'
+require 'jiffy/outputters/json'
 require 'jiffy/parser'
 require 'jiffy/parsers/json'
 require 'jiffy/parsers/json_array'

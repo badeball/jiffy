@@ -58,7 +58,7 @@ require 'stringio'
 
 i = StringIO.new('[false, true, null]')
 o = StringIO.new
-outputter = Jiffy::JsonOutputter.new(out: o)
+outputter = Jiffy::Outputters::Json.new(out: o)
 
 Jiffy.new(in: i).format(outputter: outputter)
 

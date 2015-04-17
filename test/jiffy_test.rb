@@ -535,7 +535,7 @@ describe Jiffy do
 
       out = StringIO.new
 
-      Jiffy.new(in: example).cl_format(outputter: Jiffy::JsonOutputter.new(out: out))
+      Jiffy.new(in: example).cl_format(outputter: Jiffy::Outputters::Json.new(out: out))
 
       assert_equal "\n", out.string[-1]
     end

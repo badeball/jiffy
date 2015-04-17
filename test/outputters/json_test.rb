@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'jiffy/json_outputter'
+require 'jiffy/outputters/json'
 
 describe Jiffy::JsonOutputter do
   describe '#initialize' do
