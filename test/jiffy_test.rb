@@ -259,6 +259,19 @@ describe Jiffy do
       [:number, 0],
       :end_array
 
+    it_should_tokenize '[1.123E+10]',
+      :begin_array,
+      [:number, 1],
+      [:char, "."],
+      [:number, 1],
+      [:number, 2],
+      [:number, 3],
+      :exponent,
+      [:char, "+"],
+      [:number, 1],
+      [:number, 0],
+      :end_array
+
     it_should_not_tokenize '[0x00]'
     it_should_not_tokenize '[Infinity]'
     it_should_not_tokenize '[,""]'
