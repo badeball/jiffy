@@ -12,8 +12,6 @@ class Jiffy
       rule :begin_string, :payload => "\""
       rule :end_string, :payload => "\""
       rule :null, :payload =>  "null"
-      rule :nan, :payload =>  "NaN"
-      rule :inf, :payload =>  "Infinity"
       rule :true, :payload =>  "true"
       rule :false, :payload =>  "false"
       rule :char
