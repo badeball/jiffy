@@ -19,6 +19,17 @@ class Jiffy
       rule :exponent, :payload => "e"
       rule :minus, :payload => "-"
       rule :plus, :payload => "+"
+      rule :escaped_quotation_mark, :payload => "\""
+      rule :escaped_reverse_solidus, :payload => "\\"
+      rule :escaped_solidus, :payload => "/"
+      rule :escaped_backspace, :payload => "\\b"
+      rule :escaped_formfeed, :payload => "\\f"
+      rule :escaped_newline, :payload => "\\n"
+      rule :escaped_carriage_return, :payload => "\\r"
+      rule :escaped_horizontal_tab, :payload => "\\t"
+      rule :escaped_unicode do |sequence|
+        "\\u#{sequence}"
+      end
     end
   end
 end

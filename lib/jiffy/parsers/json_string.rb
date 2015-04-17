@@ -1,7 +1,7 @@
 
 # line 1 "json_string.rl"
 
-# line 17 "json_string.rl"
+# line 29 "json_string.rl"
 
 
 class Jiffy
@@ -15,7 +15,10 @@ class << self
 	private :_json_string_actions, :_json_string_actions=
 end
 self._json_string_actions = [
-	0, 1, 0, 1, 1
+	0, 1, 0, 1, 1, 1, 2, 1, 
+	3, 1, 4, 1, 5, 1, 6, 1, 
+	7, 1, 8, 1, 9, 1, 10, 1, 
+	11, 2, 11, 12
 ]
 
 class << self
@@ -67,24 +70,15 @@ self._json_string_index_offsets = [
 ]
 
 class << self
-	attr_accessor :_json_string_indicies
-	private :_json_string_indicies, :_json_string_indicies=
-end
-self._json_string_indicies = [
-	0, 1, 3, 4, 1, 2, 2, 2, 
-	2, 2, 2, 2, 2, 2, 5, 1, 
-	6, 6, 6, 1, 7, 7, 7, 1, 
-	8, 8, 8, 1, 2, 2, 2, 1, 
-	1, 0
-]
-
-class << self
 	attr_accessor :_json_string_trans_targs
 	private :_json_string_trans_targs, :_json_string_trans_targs=
 end
 self._json_string_trans_targs = [
-	2, 0, 2, 8, 3, 4, 5, 6, 
-	7
+	2, 0, 8, 3, 0, 2, 2, 2, 
+	2, 2, 2, 2, 2, 2, 4, 0, 
+	5, 5, 5, 0, 6, 6, 6, 0, 
+	7, 7, 7, 0, 2, 2, 2, 0, 
+	0, 0
 ]
 
 class << self
@@ -92,8 +86,11 @@ class << self
 	private :_json_string_trans_actions, :_json_string_trans_actions=
 end
 self._json_string_trans_actions = [
-	0, 0, 3, 1, 3, 3, 3, 3, 
-	3
+	0, 0, 1, 21, 0, 3, 5, 9, 
+	7, 11, 13, 15, 17, 19, 0, 0, 
+	23, 23, 23, 0, 23, 23, 23, 0, 
+	23, 23, 23, 0, 25, 25, 25, 0, 
+	0, 0
 ]
 
 class << self
@@ -115,7 +112,7 @@ end
 self.json_string_en_main = 1;
 
 
-# line 24 "json_string.rl"
+# line 36 "json_string.rl"
 
         super
       end
@@ -126,16 +123,16 @@ self.json_string_en_main = 1;
         p = self.p
 
         
-# line 130 "json_string.rb"
+# line 127 "json_string.rb"
 begin
 	p ||= 0
 	pe ||= data.length
 	cs = json_string_start
 end
 
-# line 34 "json_string.rl"
+# line 46 "json_string.rl"
         
-# line 139 "json_string.rb"
+# line 136 "json_string.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -206,7 +203,6 @@ begin
 	     _trans += _klen
 	  end
 	end while false
-	_trans = _json_string_indicies[_trans]
 	cs = _json_string_trans_targs[_trans]
 	if _json_string_trans_actions[_trans] != 0
 		_acts = _json_string_trans_actions[_trans]
@@ -230,7 +226,51 @@ when 1 then
 # line 7 "json_string.rl"
 		begin
  y << [:char, [data[p]].pack("c*")] 		end
-# line 234 "json_string.rb"
+when 2 then
+# line 13 "json_string.rl"
+		begin
+ y << :escaped_quotation_mark 		end
+when 3 then
+# line 14 "json_string.rl"
+		begin
+ y << :escaped_reverse_solidus 		end
+when 4 then
+# line 15 "json_string.rl"
+		begin
+ y << :escaped_solidus 		end
+when 5 then
+# line 16 "json_string.rl"
+		begin
+ y << :escaped_backspace 		end
+when 6 then
+# line 17 "json_string.rl"
+		begin
+ y << :escaped_formfeed 		end
+when 7 then
+# line 18 "json_string.rl"
+		begin
+ y << :escaped_newline 		end
+when 8 then
+# line 19 "json_string.rl"
+		begin
+ y << :escaped_carriage_return 		end
+when 9 then
+# line 20 "json_string.rl"
+		begin
+ y << :escaped_horizontal_tab 		end
+when 10 then
+# line 23 "json_string.rl"
+		begin
+ unicode_sequence = "" 		end
+when 11 then
+# line 23 "json_string.rl"
+		begin
+ unicode_sequence << [data[p]].pack("c*") 		end
+when 12 then
+# line 23 "json_string.rl"
+		begin
+ y << [:escaped_unicode, unicode_sequence.to_s] 		end
+# line 274 "json_string.rb"
 			end # action switch
 		end
 	end
@@ -257,7 +297,7 @@ when 1 then
 	end
 	end
 
-# line 35 "json_string.rl"
+# line 47 "json_string.rl"
 
         if cs >= json_string_first_final
           p + 1

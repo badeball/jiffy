@@ -143,76 +143,63 @@ describe Jiffy do
     it_should_tokenize '["\b"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "b"],
+      :escaped_backspace,
       :end_string,
       :end_array
 
     it_should_tokenize '["\r"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "r"],
+      :escaped_carriage_return,
       :end_string,
       :end_array
 
     it_should_tokenize '["\f"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "f"],
+      :escaped_formfeed,
       :end_string,
       :end_array
 
     it_should_tokenize '["\t"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "t"],
+      :escaped_horizontal_tab,
       :end_string,
       :end_array
 
     it_should_tokenize '["\n"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "n"],
+      :escaped_newline,
       :end_string,
       :end_array
 
     it_should_tokenize '["\""]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "\""],
+      :escaped_quotation_mark,
       :end_string,
       :end_array
 
     it_should_tokenize '["\\\\"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "\\"],
+      :escaped_reverse_solidus,
       :end_string,
       :end_array
 
     it_should_tokenize '["\/"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "/"],
+      :escaped_solidus,
       :end_string,
       :end_array
 
     it_should_tokenize '["\u1111"]',
       :begin_array,
       :begin_string,
-      [:char, "\\"],
-      [:char, "u"],
-      [:char, "1"],
-      [:char, "1"],
-      [:char, "1"],
-      [:char, "1"],
+      [:escaped_unicode, "1111"],
       :end_string,
       :end_array
 

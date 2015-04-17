@@ -5,10 +5,22 @@
     action exit { fhold; fbreak; }
 
     action char { y << [:char, [data[p]].pack("c*")] }
+    action unicode { y << [:unicode, data[(p-4)..p].pack("c*")] }
 
     character = ^([\"\\] | 0..0x1f) >char;
-    sequence = '\\' >char [\"\\/bfnrt] >char;
-    unicode = '\\' >char 'u' >char [0-9a-fA-F]{4} $char;
+
+    sequence = '\\' (
+      '"' >{ y << :escaped_quotation_mark } |
+      '\\' >{ y << :escaped_reverse_solidus } |
+      '/' >{ y << :escaped_solidus } |
+      'b' >{ y << :escaped_backspace } |
+      'f' >{ y << :escaped_formfeed } |
+      'n' >{ y << :escaped_newline } |
+      'r' >{ y << :escaped_carriage_return } |
+      't' >{ y << :escaped_horizontal_tab }
+    );
+
+    unicode = '\\u' >{ unicode_sequence = "" } [0-9a-fA-F]{4} ${ unicode_sequence << [data[p]].pack("c*") } @{ y << [:escaped_unicode, unicode_sequence.to_s] };
 
     main := '"' (
                   character | sequence | unicode
