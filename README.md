@@ -58,7 +58,7 @@ require 'stringio'
 
 out = StringIO.new
 
-Jiffy.new(in: StringIO.new('[false, true, null]')).format(Jiffy::JsonOutputter.new(out: out))
+Jiffy.new(in: StringIO.new('[false, true, null]')).format(outputter: Jiffy::JsonOutputter.new(out: out))
 
 out.string # => "[\n  false,\n  true,\n  null\n]"
 ```
