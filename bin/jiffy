@@ -5,6 +5,7 @@ require 'jiffy'
 require 'jiffy/version'
 
 options = {
+  indent_size: 2,
   outputter: "json"
 }
 
@@ -12,6 +13,10 @@ opts = OptionParser.new do |opts|
   opts.banner = "Usage: jiffy [options] [FILE]"
   opts.separator "Standard input is read when FILE is not present"
   opts.separator ""
+
+  opts.on_tail("-iSIZE", "--indent=SIZE", Integer, "how many spaces to use for indenting") do |size|
+    options[:indent_size] = size
+  end
 
   opts.on_tail("-oNAME", "--output=NAME", ["json", "ruby"], "which format to output (json, ruby)") do |outputter|
     options[:outputter] = outputter
@@ -52,9 +57,9 @@ outputter = case options[:outputter]
             end
 
 result = if ARGV.empty?
-           Jiffy.new(in: STDIN).cl_format(outputter: outputter.new)
+           Jiffy.new(in: STDIN).cl_format(outputter: outputter.new(options))
          else
-           Jiffy.new(in: ARGF).cl_format(outputter: outputter.new)
+           Jiffy.new(in: ARGF).cl_format(outputter: outputter.new(options))
          end
 
 exit 1 unless result
