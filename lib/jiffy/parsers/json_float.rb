@@ -75,7 +75,7 @@ self._json_float_indicies = [
 	1, 5, 5, 6, 1, 6, 1, 1, 
 	8, 9, 9, 1, 7, 1, 9, 9, 
 	1, 4, 7, 1, 1, 1, 6, 7, 
-	1, 8, 9, 9, 10, 7, 0
+	1, 8, 9, 9, 3, 7, 0
 ]
 
 class << self
@@ -84,7 +84,7 @@ class << self
 end
 self._json_float_trans_targs = [
 	2, 0, 6, 10, 8, 5, 9, 7, 
-	3, 4, 10
+	3, 4
 ]
 
 class << self
@@ -92,8 +92,8 @@ class << self
 	private :_json_float_trans_actions, :_json_float_trans_actions=
 end
 self._json_float_trans_actions = [
-	3, 0, 5, 3, 5, 3, 5, 1, 
-	3, 3, 5
+	3, 0, 5, 5, 5, 3, 5, 1, 
+	3, 3
 ]
 
 class << self

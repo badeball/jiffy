@@ -7,7 +7,7 @@
     action char { y << [:char, [data[p]].pack("c*")] }
     action number { y << [:number, [data[p]].pack("c*").to_i] }
 
-    significand = '-'? @char ('0' >number | [1-9] >char [0-9]* $number) ('.' >char [0-9]+ $number)?;
+    significand = '-'? @char ('0' >number | [1-9] >number [0-9]* $number) ('.' >char [0-9]+ $number)?;
 
     exponent = [Ee] >char [+\-]? @char [0-9]+ $number;
 
