@@ -56,11 +56,13 @@ Jiffy.new(in: 'some.json')
 ```ruby
 require 'stringio'
 
-out = StringIO.new
+i = StringIO.new('[false, true, null]')
+o = StringIO.new
+outputter = Jiffy::JsonOutputter.new(out: o)
 
-Jiffy.new(in: StringIO.new('[false, true, null]')).format(outputter: Jiffy::JsonOutputter.new(out: out))
+Jiffy.new(in: i).format(outputter: outputter)
 
-out.string # => "[\n  false,\n  true,\n  null\n]"
+o.string # => "[\n  false,\n  true,\n  null\n]"
 ```
 
 ### Command line usage
