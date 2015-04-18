@@ -7,18 +7,18 @@ class Jiffy
       rule :end_array, :payload => "]", :indent => -1, :break_before => true
       rule :value_separator, :payload => ",", :break_after => true
       rule :name_separator, :payload => ": "
-      rule :begin_name, :payload => "\""
-      rule :end_name, :payload => "\""
-      rule :begin_string, :payload => "\""
-      rule :end_string, :payload => "\""
-      rule :null, :payload =>  "null"
-      rule :true, :payload =>  "true"
-      rule :false, :payload =>  "false"
-      rule :char
-      rule :number
-      rule :exponent, :payload => "e"
-      rule :minus, :payload => "-"
-      rule :plus, :payload => "+"
+      rule :begin_name, :payload => "\"", :color => :purple
+      rule :end_name, :payload => "\"", :color => :purple
+      rule :begin_string, :payload => "\"", :color => :purple
+      rule :end_string, :payload => "\"", :color => :purple
+      rule :null, :payload => "null", :color => :gray
+      rule :true, :payload => "true", :color => :blue
+      rule :false, :payload => "false", :color => :blue
+      rule :char, :color => :purple
+      rule :number, :color => :cyan
+      rule :exponent, :payload => "e", :color => :cyan
+      rule :minus, :payload => "-", :color => :cyan
+      rule :plus, :payload => "+", :color => :cyan
       rule :escaped_quotation_mark, :payload => "\""
       rule :escaped_reverse_solidus, :payload => "\\"
       rule :escaped_solidus, :payload => "/"
