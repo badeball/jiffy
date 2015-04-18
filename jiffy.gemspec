@@ -16,7 +16,20 @@ Gem::Specification.new do |s|
   s.executables = 'jiffy'
 
   s.files       = %w[
+    .travis.yml
+    Gemfile
+    Gemfile.lock
+    LICENSE
+    README.md
+    Rakefile
     bin/jiffy
+    jiffy.gemspec
+    lib/jiffy.rb
+    lib/jiffy/array_mimicking_io.rb
+    lib/jiffy/outputter.rb
+    lib/jiffy/outputters/json.rb
+    lib/jiffy/outputters/ruby.rb
+    lib/jiffy/parser.rb
     lib/jiffy/parsers/json.rb
     lib/jiffy/parsers/json.rl
     lib/jiffy/parsers/json_array.rb
@@ -30,18 +43,10 @@ Gem::Specification.new do |s|
     lib/jiffy/parsers/json_string.rl
     lib/jiffy/parsers/json_value.rb
     lib/jiffy/parsers/json_value.rl
-    lib/jiffy/array_mimicking_io.rb
-    lib/jiffy/outputter.rb
-    lib/jiffy/outputters/json.rb
-    lib/jiffy/outputters/ruby.rb
     lib/jiffy/version.rb
-    lib/jiffy.rb
     test/jiffy_test.rb
-    Gemfile
-    Gemfile.lock
-    jiffy.gemspec
-    LICENSE
-    README.md
+    test/outputter_test.rb
+    test/outputters/json_test.rb
   ]
 
   s.add_development_dependency('minitest')
