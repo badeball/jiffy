@@ -105,5 +105,15 @@ describe Jiffy::Outputter do
         assert_equal outputter.cur_indent, 1
       end
     end
+
+    describe ":format option" do
+      it "should invoke the given callback to format the payload" do
+        out, outputter = create_test_outputter
+
+        outputter.apply_rule format: :upcase.to_proc, payload: "foo"
+
+        assert_equal out.string, "FOO"
+      end
+    end
   end
 end

@@ -3,11 +3,12 @@ class Jiffy
     class << self
       attr_accessor :rules
 
-      def rule(token, options = {})
+      def rule(token, options = {}, &block)
         if options[:break_before] && options[:break_after]
           raise ArgumentError, "Cannot specify both :break_before and :break_after"
         end
 
+        options[:format] ||= block
         @rules ||= {}
         @rules[token] = options
       end
@@ -40,7 +41,13 @@ class Jiffy
         @out.print "\n" << " " * @cur_indent * @indent_size
       end
 
-      @out.print rule[:payload] || payload.to_s
+      payload ||= rule[:payload]
+
+      if rule[:format]
+        @out.print rule[:format].call payload
+      else
+        @out.print payload.to_s
+      end
 
       if rule[:break_after]
         @out.print "\n" << " " * @cur_indent * @indent_size
