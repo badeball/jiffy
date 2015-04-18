@@ -115,5 +115,41 @@ describe Jiffy::Outputter do
         assert_equal out.string, "FOO"
       end
     end
+
+    describe "given that colors are enabled" do
+      describe ":color option" do
+        it "should change last_color" do
+          _, outputter = create_test_outputter color: true
+
+          outputter.apply_rule color: :green
+
+          assert_equal outputter.last_color, :green
+        end
+
+        it "should output a color sequence when last_color is nil" do
+          out, outputter = create_test_outputter color: true, last_color: nil
+
+          outputter.apply_rule color: :green
+
+          assert_match "\e[0;32m", out.string
+        end
+
+        it "should output a color sequence when last_color is a different color" do
+          out, outputter = create_test_outputter color: true, last_color: :red
+
+          outputter.apply_rule color: :green
+
+          assert_match "\e[0;32m", out.string
+        end
+
+        it "should set last_color to nil when given no :color option" do
+          _, outputter = create_test_outputter color: true, last_color: :red
+
+          outputter.apply_rule color: nil
+
+          assert_equal outputter.last_color, nil
+        end
+      end
+    end
   end
 end

@@ -14,10 +14,26 @@ class Jiffy
       end
     end
 
-    attr_accessor :out, :cur_indent, :indent_size
+    COLOR_SEQUENCES = {
+      reset: "\e[0m",
+      black: "\e[0;30m",
+      gray: "\e[0;37m",
+      red: "\e[0;31m",
+      green: "\e[0;32m",
+      yellow: "\e[0;33m",
+      blue: "\e[0;34m",
+      purple: "\e[0;35m",
+      light_purple: "\e[38;5;174m",
+      cyan: "\e[0;36m",
+      white: "\e[0;37m"
+    }
+
+    attr_accessor :out, :cur_indent, :indent_size, :last_color
 
     def initialize(options = {})
       @out = options[:out] || $stdout
+      @color = options[:color]
+      @last_color = options[:last_color]
       @cur_indent = options[:cur_indent] || 0
       @indent_size = options[:indent_size] || 2
 
@@ -39,6 +55,18 @@ class Jiffy
 
       if rule[:break_before]
         @out.print "\n" << " " * @cur_indent * @indent_size
+      end
+
+      if @color
+        if rule[:color]
+          if @last_color.nil? || @last_color != rule[:color]
+            @last_color = rule[:color]
+            @out.print COLOR_SEQUENCES[rule[:color]]
+          end
+        elsif !@last_color.nil?
+          @last_color = nil
+          @out.print COLOR_SEQUENCES[:reset]
+        end
       end
 
       payload ||= rule[:payload]
