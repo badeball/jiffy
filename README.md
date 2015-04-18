@@ -95,6 +95,14 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.1.0
+
+* Fixing an issue where the first digit in numbers was tokenized to :char.
+* Add numerous extra tokens to represent things that was previously emitted as :chars.
+* Add an option to colorize output.
+* Add an option to output Ruby objects instead of Json.
+* Different refactorings, which unfortunately breaks API compatibility.
+
 ### 1.0.4
 
 * SIGPIPE is handled by exiting (with exit code 141).
