@@ -46,7 +46,6 @@ Gem::Specification.new do |s|
     lib/jiffy/version.rb
     test/jiffy_test.rb
     test/outputter_test.rb
-    test/outputters/json_test.rb
   ]
 
   s.add_development_dependency('minitest')
