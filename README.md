@@ -95,6 +95,10 @@ Tested against the following Ruby versions.
 
 ## Changelog
 
+### 1.1.1
+
+* Fixed a bug in outputting of escape sequences.
+
 ### 1.1.0
 
 * Fixing an issue where the first digit in numbers was tokenized to :char.
