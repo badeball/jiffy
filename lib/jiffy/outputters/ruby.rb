@@ -19,9 +19,9 @@ class Jiffy
       rule :exponent, :payload => "e", :color => :purple
       rule :minus, :payload => "-", :color => :purple
       rule :plus, :payload => "+", :color => :purple
-      rule :escaped_quotation_mark, :payload => "\""
-      rule :escaped_reverse_solidus, :payload => "\\"
-      rule :escaped_solidus, :payload => "/"
+      rule :escaped_quotation_mark, :payload => "\\\""
+      rule :escaped_reverse_solidus, :payload => "\\\\"
+      rule :escaped_solidus, :payload => "\\/"
       rule :escaped_backspace, :payload => "\\b"
       rule :escaped_formfeed, :payload => "\\f"
       rule :escaped_newline, :payload => "\\n"
