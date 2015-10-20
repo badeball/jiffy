@@ -67,6 +67,6 @@ input = if ARGV.empty?
           ARGF
         end
 
-result = Jiffy.new(in: input, outputter: outputter.new(options)).cl_format
+result = Jiffy::CL.new(in: input, outputter: outputter.new(options)).format
 
 exit 1 unless result

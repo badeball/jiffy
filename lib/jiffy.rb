@@ -1,4 +1,5 @@
 require "jiffy/array_mimicking_io"
+require "jiffy/cl"
 require "jiffy/outputter"
 require "jiffy/outputters/json"
 require "jiffy/outputters/ruby"
@@ -45,21 +46,5 @@ class Jiffy
     loop do
       @outputter.process_token *enumerator.next
     end
-  end
-
-  def cl_format
-    format
-
-    @outputter.process_token :char, "\n"
-
-    true
-  rescue Errno::EACCES
-    @err.puts "jiffy: #{@io.filename}: Permission denied"
-  rescue Errno::ENOENT
-    @err.puts "jiffy: #{@io.filename}: No such file or directory"
-  rescue Errno::EISDIR
-    @err.puts "jiffy: #{@io.filename}: Is a directory"
-  rescue UnexpectedEndError, UnparseableError => e
-    @err.puts e.message
   end
 end
