@@ -57,25 +57,17 @@ class Jiffy
     err = options[:err] || $stderr
 
     err.puts "jiffy: #{@io.filename}: Permission denied"
-
-    false
   rescue Errno::ENOENT
     err = options[:err] || $stderr
 
     err.puts "jiffy: #{@io.filename}: No such file or directory"
-
-    false
   rescue Errno::EISDIR
     err = options[:err] || $stderr
 
     err.puts "jiffy: #{@io.filename}: Is a directory"
-
-    false
   rescue UnexpectedEndError, UnparseableError => e
     err = options[:err] || $stderr
 
     err.puts e.message
-
-    false
   end
 end

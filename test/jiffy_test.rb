@@ -22,7 +22,7 @@ def it_should_properly_handle(exception, options)
   end
 
   it "should return false upon #{exception.inspect}" do
-    assert_equal false, Jiffy.new(in: io).cl_format(err: StringIO.new, outputter: DummyOutputter.new)
+    assert !Jiffy.new(in: io).cl_format(err: StringIO.new, outputter: DummyOutputter.new)
   end
 
   it "should write #{options[:with]} to :stderr upon #{exception.inspect}" do
@@ -338,7 +338,7 @@ describe Jiffy do
     it 'should return true upon valid input' do
       example = StringIO.new valid_json
 
-      assert_equal true, Jiffy.new(in: example).cl_format(outputter: DummyOutputter.new)
+      assert Jiffy.new(in: example).cl_format(outputter: DummyOutputter.new)
     end
 
     it 'should not write to :stderr upon valid input' do
