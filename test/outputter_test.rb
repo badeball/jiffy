@@ -1,6 +1,5 @@
+require "test_helper"
 require "stringio"
-require "minitest/autorun"
-require "jiffy/outputter"
 
 def create_test_outputter(options = {})
   options[:out] = StringIO.new

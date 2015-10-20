@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.files       = Dir["LICENSE", "README.md", "lib/**/*"]
   s.test_files  = Dir["test/**/*.rb"]
 
+  s.add_development_dependency("codeclimate-test-reporter")
   s.add_development_dependency("minitest")
   s.add_development_dependency("rake")
 end

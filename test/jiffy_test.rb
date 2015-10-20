@@ -1,6 +1,5 @@
+require "test_helper"
 require "stringio"
-require "minitest/autorun"
-require "jiffy"
 
 valid_json = '["Valid JSON"]'
 invalid_json = '["Invalid" "JSON"]'
