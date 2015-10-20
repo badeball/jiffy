@@ -48,26 +48,20 @@ class Jiffy
   end
 
   def cl_format(options = {})
+    err = options[:err] || $stderr
+
     format options
 
     options[:outputter].process_token :char, "\n"
 
     true
   rescue Errno::EACCES
-    err = options[:err] || $stderr
-
     err.puts "jiffy: #{@io.filename}: Permission denied"
   rescue Errno::ENOENT
-    err = options[:err] || $stderr
-
     err.puts "jiffy: #{@io.filename}: No such file or directory"
   rescue Errno::EISDIR
-    err = options[:err] || $stderr
-
     err.puts "jiffy: #{@io.filename}: Is a directory"
   rescue UnexpectedEndError, UnparseableError => e
-    err = options[:err] || $stderr
-
     err.puts e.message
   end
 end
