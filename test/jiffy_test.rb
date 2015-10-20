@@ -15,6 +15,10 @@ def it_should_properly_handle(exception, options)
     io.define_singleton_method :readpartial do |*|
       raise exception
     end
+
+    io.define_singleton_method :filename do |*|
+      "foo"
+    end
   end
 
   it "should return false upon #{exception.inspect}" do
@@ -327,9 +331,9 @@ describe Jiffy do
   describe '#cl_format' do
     it_should_properly_handle Jiffy::UnexpectedEndError.new('Unexpected end of input'), with: 'Unexpected end of input'
     it_should_properly_handle Jiffy::UnparseableError.new('Unexpected token at position'), with: 'Unexpected token at position'
-    it_should_properly_handle Errno::EACCES, with: 'jiffy: Permission denied'
-    it_should_properly_handle Errno::ENOENT, with: 'jiffy: No such file or directory'
-    it_should_properly_handle Errno::EISDIR, with: 'jiffy: Is a directory'
+    it_should_properly_handle Errno::EACCES, with: 'jiffy: foo: Permission denied'
+    it_should_properly_handle Errno::ENOENT, with: 'jiffy: foo: No such file or directory'
+    it_should_properly_handle Errno::EISDIR, with: 'jiffy: foo: Is a directory'
 
     it 'should return true upon valid input' do
       example = StringIO.new valid_json

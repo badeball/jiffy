@@ -56,31 +56,19 @@ class Jiffy
   rescue Errno::EACCES
     err = options[:err] || $stderr
 
-    if @io.respond_to? :filename
-      err.write "jiffy: #{@io.filename}: Permission denied\n"
-    else
-      err.write "jiffy: Permission denied\n"
-    end
+    err.write "jiffy: #{@io.filename}: Permission denied\n"
 
     false
   rescue Errno::ENOENT
     err = options[:err] || $stderr
 
-    if @io.respond_to? :filename
-      err.write "jiffy: #{@io.filename}: No such file or directory\n"
-    else
-      err.write "jiffy: No such file or directory\n"
-    end
+    err.write "jiffy: #{@io.filename}: No such file or directory\n"
 
     false
   rescue Errno::EISDIR
     err = options[:err] || $stderr
 
-    if @io.respond_to? :filename
-      err.write "jiffy: #{@io.filename}: Is a directory\n"
-    else
-      err.write "jiffy: Is a directory\n"
-    end
+    err.write "jiffy: #{@io.filename}: Is a directory\n"
 
     false
   rescue UnexpectedEndError, UnparseableError => e
