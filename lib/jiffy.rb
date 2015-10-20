@@ -12,7 +12,14 @@ require "jiffy/parsers/json_string"
 require "jiffy/parsers/json_value"
 
 class Jiffy
-  class UnparseableError < StandardError; end
+  class UnparseableError < StandardError
+    attr_accessor :position
+
+    def initialize(position)
+      @position = position
+    end
+  end
+
   class UnexpectedEndError < StandardError; end
 
   def initialize(options = {})
@@ -34,7 +41,7 @@ class Jiffy
         parser.parse
       rescue EOFError
         if parser.position < @data.bytes_read || @data.bytes_read == 0
-          raise UnexpectedEndError, "Unexpected end of input"
+          raise UnexpectedEndError
         end
       end
     end

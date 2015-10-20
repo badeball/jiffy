@@ -39,8 +39,8 @@ end
 
 describe Jiffy::CL do
   describe "#format" do
-    test_exception_handling Jiffy::UnexpectedEndError.new("Unexpected end of input"), "Unexpected end of input"
-    test_exception_handling Jiffy::UnparseableError.new("Unexpected token at position"), "Unexpected token at position"
+    test_exception_handling Jiffy::UnexpectedEndError, "jiffy: Unexpected end of input"
+    test_exception_handling Jiffy::UnparseableError.new(5), "jiffy: Unexpected token at position 5"
     test_exception_handling Errno::EACCES, "jiffy: foo: Permission denied"
     test_exception_handling Errno::ENOENT, "jiffy: foo: No such file or directory"
     test_exception_handling Errno::EISDIR, "jiffy: foo: Is a directory"

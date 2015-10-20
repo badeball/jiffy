@@ -19,8 +19,10 @@ class Jiffy
       @err.puts "jiffy: #{@in.filename}: No such file or directory"
     rescue Errno::EISDIR
       @err.puts "jiffy: #{@in.filename}: Is a directory"
-    rescue UnexpectedEndError, UnparseableError => e
-      @err.puts e.message
+    rescue UnexpectedEndError
+      @err.puts "jiffy: Unexpected end of input"
+    rescue UnparseableError => e
+      @err.puts "jiffy: Unexpected token at position #{e.position}"
     end
   end
 end

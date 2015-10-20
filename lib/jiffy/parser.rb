@@ -10,8 +10,8 @@ class Jiffy
       self.yielder = options[:yielder]
     end
 
-    def raise_unparseable(p)
-      raise UnparseableError, "Unexpected token at position #{p}"
+    def raise_unparseable(position)
+      raise UnparseableError.new(position)
     end
   end
 end
