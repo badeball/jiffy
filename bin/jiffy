@@ -61,10 +61,12 @@ outputter = case options[:outputter]
               Jiffy::Outputters::Ruby
             end
 
-result = if ARGV.empty?
-           Jiffy.new(in: STDIN).cl_format(outputter: outputter.new(options))
-         else
-           Jiffy.new(in: ARGF).cl_format(outputter: outputter.new(options))
-         end
+input = if ARGV.empty?
+          STDIN
+        else
+          ARGF
+        end
+
+result = Jiffy.new(in: input).cl_format(outputter: outputter.new(options))
 
 exit 1 unless result
