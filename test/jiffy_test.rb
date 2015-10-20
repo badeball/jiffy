@@ -21,13 +21,13 @@ def it_should_properly_handle(exception, options)
   end
 
   it "should return false upon #{exception.inspect}" do
-    assert !Jiffy.new(in: io).cl_format(err: StringIO.new, outputter: DummyOutputter.new)
+    assert !Jiffy.new(in: io, err: StringIO.new, outputter: DummyOutputter.new).cl_format
   end
 
   it "should write #{options[:with]} to :stderr upon #{exception.inspect}" do
     err = StringIO.new
 
-    Jiffy.new(in: io).cl_format(err: err, outputter: DummyOutputter.new)
+    Jiffy.new(in: io, err: err, outputter: DummyOutputter.new).cl_format
 
     assert_includes err.string, options[:with]
   end
@@ -35,7 +35,7 @@ def it_should_properly_handle(exception, options)
   it ":stderr should end with a newline upon #{exception.inspect}" do
     err = StringIO.new
 
-    Jiffy.new(in: io).cl_format(err: err, outputter: DummyOutputter.new)
+    Jiffy.new(in: io, err: err, outputter: DummyOutputter.new).cl_format
 
     assert_equal "\n", err.string[-1]
   end
@@ -337,7 +337,7 @@ describe Jiffy do
     it "should return true upon valid input" do
       example = StringIO.new valid_json
 
-      assert Jiffy.new(in: example).cl_format(outputter: DummyOutputter.new)
+      assert Jiffy.new(in: example, outputter: DummyOutputter.new).cl_format
     end
 
     it "should not write to :stderr upon valid input" do
@@ -345,7 +345,7 @@ describe Jiffy do
 
       err = StringIO.new
 
-      Jiffy.new(in: example).cl_format(err: err, outputter: DummyOutputter.new)
+      Jiffy.new(in: example, err: err, outputter: DummyOutputter.new).cl_format
 
       assert_empty err.string
     end
@@ -355,7 +355,7 @@ describe Jiffy do
 
       out = StringIO.new
 
-      Jiffy.new(in: example).cl_format(outputter: Jiffy::Outputters::Json.new(out: out))
+      Jiffy.new(in: example, outputter: Jiffy::Outputters::Json.new(out: out)).cl_format
 
       assert_equal "\n", out.string[-1]
     end

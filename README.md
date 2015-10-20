@@ -60,7 +60,7 @@ i = StringIO.new("[false, true, null]")
 o = StringIO.new
 outputter = Jiffy::Outputters::Json.new(out: o)
 
-Jiffy.new(in: i).format(outputter: outputter)
+Jiffy.new(in: i, outputter: outputter).format
 
 o.string # => "[\n  false,\n  true,\n  null\n]"
 ```

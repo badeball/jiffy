@@ -24,6 +24,10 @@ class Jiffy
     end
 
     @data = ArrayMimickingIO.new(@io)
+
+    @err = options[:err] || $stdout
+
+    @outputter = options[:outputter]
   end
 
   def tokenize
@@ -39,29 +43,27 @@ class Jiffy
     end
   end
 
-  def format(options = {})
+  def format
     enumerator = tokenize
 
     loop do
-      options[:outputter].process_token *enumerator.next
+      @outputter.process_token *enumerator.next
     end
   end
 
-  def cl_format(options = {})
-    err = options[:err] || $stderr
+  def cl_format
+    format
 
-    format options
-
-    options[:outputter].process_token :char, "\n"
+    @outputter.process_token :char, "\n"
 
     true
   rescue Errno::EACCES
-    err.puts "jiffy: #{@io.filename}: Permission denied"
+    @err.puts "jiffy: #{@io.filename}: Permission denied"
   rescue Errno::ENOENT
-    err.puts "jiffy: #{@io.filename}: No such file or directory"
+    @err.puts "jiffy: #{@io.filename}: No such file or directory"
   rescue Errno::EISDIR
-    err.puts "jiffy: #{@io.filename}: Is a directory"
+    @err.puts "jiffy: #{@io.filename}: Is a directory"
   rescue UnexpectedEndError, UnparseableError => e
-    err.puts e.message
+    @err.puts e.message
   end
 end
