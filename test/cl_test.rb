@@ -7,33 +7,31 @@ class DummyOutputter
   def process_token(*); end
 end
 
-def it_should_properly_handle(exception, options)
-  io = Object.new.tap do |io|
-    io.define_singleton_method :readpartial do |*|
+def test_exception_handling(exception, expected_output)
+  jiffy = Object.new.tap do |j|
+    j.define_singleton_method :format do
       raise exception
     end
-
-    io.define_singleton_method :filename do |*|
-      "foo"
-    end
   end
+
+  input = Struct.new("ARGF", :filename).new("foo")
 
   it "should return false upon #{exception.inspect}" do
-    assert !Jiffy::CL.new(in: io, err: StringIO.new, outputter: DummyOutputter.new).format
+    assert !Jiffy::CL.new(in: input, err: StringIO.new, jiffy: jiffy).format
   end
 
-  it "should write #{options[:with]} to :stderr upon #{exception.inspect}" do
+  it "should write #{expected_output} to :stderr upon #{exception.inspect}" do
     err = StringIO.new
 
-    Jiffy::CL.new(in: io, err: err, outputter: DummyOutputter.new).format
+    Jiffy::CL.new(in: input, err: err, jiffy: jiffy).format
 
-    assert_includes err.string, options[:with]
+    assert_includes err.string, expected_output
   end
 
   it ":stderr should end with a newline upon #{exception.inspect}" do
     err = StringIO.new
 
-    Jiffy::CL.new(in: io, err: err, outputter: DummyOutputter.new).format
+    Jiffy::CL.new(in: input, err: err, jiffy: jiffy).format
 
     assert_equal "\n", err.string[-1]
   end
@@ -41,11 +39,11 @@ end
 
 describe Jiffy::CL do
   describe "#format" do
-    it_should_properly_handle Jiffy::UnexpectedEndError.new("Unexpected end of input"), with: "Unexpected end of input"
-    it_should_properly_handle Jiffy::UnparseableError.new("Unexpected token at position"), with: "Unexpected token at position"
-    it_should_properly_handle Errno::EACCES, with: "jiffy: foo: Permission denied"
-    it_should_properly_handle Errno::ENOENT, with: "jiffy: foo: No such file or directory"
-    it_should_properly_handle Errno::EISDIR, with: "jiffy: foo: Is a directory"
+    test_exception_handling Jiffy::UnexpectedEndError.new("Unexpected end of input"), "Unexpected end of input"
+    test_exception_handling Jiffy::UnparseableError.new("Unexpected token at position"), "Unexpected token at position"
+    test_exception_handling Errno::EACCES, "jiffy: foo: Permission denied"
+    test_exception_handling Errno::ENOENT, "jiffy: foo: No such file or directory"
+    test_exception_handling Errno::EISDIR, "jiffy: foo: Is a directory"
 
     it "should return true upon valid input" do
       example = StringIO.new valid_json
