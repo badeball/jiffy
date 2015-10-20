@@ -29,7 +29,7 @@ class Jiffy
   def tokenize
     Enumerator.new do |yielder|
       begin
-        parser = Parsers::Json.new(p: 0, data: @data, yielder: yielder)
+        parser = Parsers::Json.new(data: @data, yielder: yielder)
         parser.parse
       rescue EOFError
         if parser.p < @data.bytes_read || @data.bytes_read == 0

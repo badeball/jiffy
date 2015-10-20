@@ -5,7 +5,7 @@ class Jiffy
     alias_method :y, :yielder
 
     def initialize(options = {})
-      self.p = options[:p]
+      self.p = options[:p] || 0
       self.data = options[:data]
       self.yielder = options[:yielder]
     end
