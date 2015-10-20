@@ -34,29 +34,29 @@ $ yaourt -S ruby-jiffy
 ## Usage
 
 ```ruby
-require 'jiffy'
+require "jiffy"
 
-Jiffy.new(in: StringIO.new('[false, true, null]')).tokenize.to_a # => [:begin_array, :false, :value_separator, :true, :value_separator, :null, :end_array]
+Jiffy.new(in: StringIO.new("[false, true, null]")).tokenize.to_a # => [:begin_array, :false, :value_separator, :true, :value_separator, :null, :end_array]
 ```
 
 Any IO object that responds to `readpartial` can be used as an input source.
 
 ```ruby
-Jiffy.new(in: File.open('some.json'))
+Jiffy.new(in: File.open("some.json"))
 ```
 
 One can also chose to specify a file path instead of an IO object as input source.
 
 ```ruby
-Jiffy.new(in: 'some.json')
+Jiffy.new(in: "some.json")
 ```
 
 `Jiffy#format` can be used to format the input source instead of just tokenizing it.
 
 ```ruby
-require 'stringio'
+require "stringio"
 
-i = StringIO.new('[false, true, null]')
+i = StringIO.new("[false, true, null]")
 o = StringIO.new
 outputter = Jiffy::Outputters::Json.new(out: o)
 

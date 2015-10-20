@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'optparse'
-require 'jiffy'
-require 'jiffy/version'
+require "optparse"
+require "jiffy"
+require "jiffy/version"
 
 options = {
   indent_size: 2,

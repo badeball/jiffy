@@ -1,14 +1,14 @@
-require 'jiffy/array_mimicking_io'
-require 'jiffy/outputter'
-require 'jiffy/outputters/json'
-require 'jiffy/outputters/ruby'
-require 'jiffy/parser'
-require 'jiffy/parsers/json'
-require 'jiffy/parsers/json_array'
-require 'jiffy/parsers/json_float'
-require 'jiffy/parsers/json_object'
-require 'jiffy/parsers/json_string'
-require 'jiffy/parsers/json_value'
+require "jiffy/array_mimicking_io"
+require "jiffy/outputter"
+require "jiffy/outputters/json"
+require "jiffy/outputters/ruby"
+require "jiffy/parser"
+require "jiffy/parsers/json"
+require "jiffy/parsers/json_array"
+require "jiffy/parsers/json_float"
+require "jiffy/parsers/json_object"
+require "jiffy/parsers/json_string"
+require "jiffy/parsers/json_value"
 
 class Jiffy
   class UnparseableError < StandardError; end
@@ -20,7 +20,7 @@ class Jiffy
     elsif options[:in].respond_to?(:readpartial)
       @io = options[:in]
     else
-      raise ArgumentError, 'Invalid input source'
+      raise ArgumentError, "Invalid input source"
     end
 
     @data = ArrayMimickingIO.new(@io)
@@ -33,7 +33,7 @@ class Jiffy
         parser.parse
       rescue EOFError
         if parser.position < @data.bytes_read || @data.bytes_read == 0
-          raise UnexpectedEndError, 'Unexpected end of input'
+          raise UnexpectedEndError, "Unexpected end of input"
         end
       end
     end

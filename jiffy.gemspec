@@ -1,19 +1,19 @@
-require File.join(File.dirname(__FILE__), 'lib', 'jiffy', 'version')
+require File.join(File.dirname(__FILE__), "lib", "jiffy", "version")
 
 Gem::Specification.new do |s|
-  s.name        = 'jiffy'
+  s.name        = "jiffy"
   s.version     = Jiffy::VERSION
-  s.license     = 'MIT'
-  s.date        = '2015-06-04'
+  s.license     = "MIT"
+  s.date        = "2015-06-04"
 
-  s.summary     = 'A streaming-based JSON formatter in Ruby.'
-  s.description = 'Jiffy utilizes Ragel in order to parse and continuously format JSON data. This allows it to achieve a constant memory usage, independent of the input size.'
+  s.summary     = "A streaming-based JSON formatter in Ruby."
+  s.description = "Jiffy utilizes Ragel in order to parse and continuously format JSON data. This allows it to achieve a constant memory usage, independent of the input size."
 
-  s.authors     = ['Jonas Amundsen']
-  s.email       = ['jonasba+gem@gmail.com']
-  s.homepage    = 'https://github.com/badeball/jiffy'
+  s.authors     = ["Jonas Amundsen"]
+  s.email       = ["jonasba+gem@gmail.com"]
+  s.homepage    = "https://github.com/badeball/jiffy"
 
-  s.executables = 'jiffy'
+  s.executables = "jiffy"
 
   s.files       = %w[
     .travis.yml
@@ -48,6 +48,6 @@ Gem::Specification.new do |s|
     test/outputter_test.rb
   ]
 
-  s.add_development_dependency('minitest')
-  s.add_development_dependency('rake')
+  s.add_development_dependency("minitest")
+  s.add_development_dependency("rake")
 end

@@ -18,7 +18,7 @@ describe Jiffy::Outputter do
   end
 
   describe "#initialize" do
-    it 'should raise an error when :out does not respond to #print' do
+    it "should raise an error when :out does not respond to #print" do
       out = Object.new
 
       def out.respond_to?(method)

@@ -1,6 +1,6 @@
-require 'stringio'
-require 'minitest/autorun'
-require 'jiffy'
+require "stringio"
+require "minitest/autorun"
+require "jiffy"
 
 valid_json = '["Valid JSON"]'
 invalid_json = '["Invalid" "JSON"]'
@@ -43,7 +43,7 @@ def it_should_properly_handle(exception, options)
 end
 
 def it_should_tokenize(json, *tokens)
-  it "should tokenize #{json.inspect} to #{tokens.map(&:inspect).join ', '}" do
+  it "should tokenize #{json.inspect} to #{tokens.map(&:inspect).join ", "}" do
     assert_equal tokens, Jiffy.new(in: StringIO.new(json)).tokenize.to_a
   end
 end
@@ -57,7 +57,7 @@ def it_should_not_tokenize(json)
 end
 
 describe Jiffy do
-  describe '#tokenize' do
+  describe "#tokenize" do
     it_should_tokenize '{}',
       :begin_object,
       :end_object
@@ -281,7 +281,7 @@ describe Jiffy do
     it_should_not_tokenize '[true'
     it_should_not_tokenize '{"":""'
 
-    it 'should raise UnexpectedEndError on valid, but incomplete JSON input' do
+    it "should raise UnexpectedEndError on valid, but incomplete JSON input" do
       example = StringIO.new incomplete_json
 
       assert_raises Jiffy::UnexpectedEndError do
@@ -289,7 +289,7 @@ describe Jiffy do
       end
     end
 
-    it 'should raise UnexpectedEndError on empty input' do
+    it "should raise UnexpectedEndError on empty input" do
       example = StringIO.new ""
 
       assert_raises Jiffy::UnexpectedEndError do
@@ -297,7 +297,7 @@ describe Jiffy do
       end
     end
 
-    it 'should raise UnparseableError on invalid JSON input' do
+    it "should raise UnparseableError on invalid JSON input" do
       example = StringIO.new invalid_json
 
       assert_raises Jiffy::UnparseableError do
@@ -306,12 +306,12 @@ describe Jiffy do
     end
   end
 
-  describe '#initialize' do
-    it 'should not raise an error when :in is an instance of String' do
+  describe "#initialize" do
+    it "should not raise an error when :in is an instance of String" do
       Jiffy.new(in: __FILE__)
     end
 
-    it 'should not raise en error when :in responds to :readpartial' do
+    it "should not raise en error when :in responds to :readpartial" do
       class Bar
         def readpartial(*); end
       end
@@ -319,7 +319,7 @@ describe Jiffy do
       Jiffy.new(in: Bar.new)
     end
 
-    it 'should raise an error when :in is neither an instance of Strirng nor responds to :readpartial' do
+    it "should raise an error when :in is neither an instance of Strirng nor responds to :readpartial" do
       class Foo; end
 
       assert_raises ArgumentError do
@@ -328,20 +328,20 @@ describe Jiffy do
     end
   end
 
-  describe '#cl_format' do
-    it_should_properly_handle Jiffy::UnexpectedEndError.new('Unexpected end of input'), with: 'Unexpected end of input'
-    it_should_properly_handle Jiffy::UnparseableError.new('Unexpected token at position'), with: 'Unexpected token at position'
-    it_should_properly_handle Errno::EACCES, with: 'jiffy: foo: Permission denied'
-    it_should_properly_handle Errno::ENOENT, with: 'jiffy: foo: No such file or directory'
-    it_should_properly_handle Errno::EISDIR, with: 'jiffy: foo: Is a directory'
+  describe "#cl_format" do
+    it_should_properly_handle Jiffy::UnexpectedEndError.new("Unexpected end of input"), with: "Unexpected end of input"
+    it_should_properly_handle Jiffy::UnparseableError.new("Unexpected token at position"), with: "Unexpected token at position"
+    it_should_properly_handle Errno::EACCES, with: "jiffy: foo: Permission denied"
+    it_should_properly_handle Errno::ENOENT, with: "jiffy: foo: No such file or directory"
+    it_should_properly_handle Errno::EISDIR, with: "jiffy: foo: Is a directory"
 
-    it 'should return true upon valid input' do
+    it "should return true upon valid input" do
       example = StringIO.new valid_json
 
       assert Jiffy.new(in: example).cl_format(outputter: DummyOutputter.new)
     end
 
-    it 'should not write to :stderr upon valid input' do
+    it "should not write to :stderr upon valid input" do
       example = StringIO.new valid_json
 
       err = StringIO.new
@@ -351,7 +351,7 @@ describe Jiffy do
       assert_equal "", err.string
     end
 
-    it ':stdout should end with a newline upon valid input' do
+    it ":stdout should end with a newline upon valid input" do
       example = StringIO.new valid_json
 
       out = StringIO.new
