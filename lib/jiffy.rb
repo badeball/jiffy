@@ -1,6 +1,7 @@
 require "jiffy/array_mimicking_io"
 require "jiffy/cl"
 require "jiffy/outputter"
+require "jiffy/outputters/common_rules"
 require "jiffy/outputters/json"
 require "jiffy/outputters/ruby"
 require "jiffy/parser"
