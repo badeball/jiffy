@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   s.test_files  = Dir["test/**/*.rb"]
 
   s.add_development_dependency("codeclimate-test-reporter")
+  s.add_development_dependency("guard")
+  s.add_development_dependency("guard-minitest")
   s.add_development_dependency("minitest")
   s.add_development_dependency("rake")
 end
