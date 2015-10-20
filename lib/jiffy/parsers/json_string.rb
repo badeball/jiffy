@@ -120,7 +120,7 @@ self.json_string_en_main = 1;
       def parse
         pe = :ignored
         eof = :ignored
-        p = self.p
+        p = self.position
 
         
 # line 127 "json_string.rb"

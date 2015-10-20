@@ -1,11 +1,11 @@
 class Jiffy
   class Parser
-    attr_accessor :p, :data, :yielder
+    attr_accessor :position, :data, :yielder
 
     alias_method :y, :yielder
 
     def initialize(options = {})
-      self.p = options[:p] || 0
+      self.position = options[:p] || 0
       self.data = options[:data]
       self.yielder = options[:yielder]
     end

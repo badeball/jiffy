@@ -122,7 +122,7 @@ self.json_en_main = 1;
       def parse
         pe = :ignored
         eof = :ignored
-        p = self.p
+        p = self.position
 
         
 # line 129 "json.rb"
@@ -260,7 +260,7 @@ when 1 then
 
         raise_unparseable p unless p == data.bytes_read
       ensure
-        self.p = p
+        self.position = p
       end
     end
   end

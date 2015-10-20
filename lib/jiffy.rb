@@ -32,7 +32,7 @@ class Jiffy
         parser = Parsers::Json.new(data: @data, yielder: yielder)
         parser.parse
       rescue EOFError
-        if parser.p < @data.bytes_read || @data.bytes_read == 0
+        if parser.position < @data.bytes_read || @data.bytes_read == 0
           raise UnexpectedEndError, 'Unexpected end of input'
         end
       end

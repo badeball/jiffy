@@ -29,7 +29,7 @@ class Jiffy
       def parse
         pe = :ignored
         eof = :ignored
-        p = self.p
+        p = self.position
 
         %% write init;
         %% write exec;

@@ -148,7 +148,7 @@ self.json_object_en_main = 1;
       def parse
         pe = :ignored
         eof = :ignored
-        p = self.p
+        p = self.position
 
         
 # line 155 "json_object.rb"

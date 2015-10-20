@@ -28,14 +28,14 @@ class Jiffy
       def parse
         pe = :ignored
         eof = :ignored
-        p = self.p
+        p = self.position
 
         %% write init;
         %% write exec;
 
         raise_unparseable p unless p == data.bytes_read
       ensure
-        self.p = p
+        self.position = p
       end
     end
   end

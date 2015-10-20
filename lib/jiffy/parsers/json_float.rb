@@ -124,7 +124,7 @@ self.json_float_en_main = 1;
       def parse
         pe = :ignored
         eof = :ignored
-        p = self.p
+        p = self.position
 
         
 # line 131 "json_float.rb"
