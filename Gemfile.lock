@@ -57,12 +57,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  codeclimate-test-reporter
-  guard
-  guard-minitest
+  codeclimate-test-reporter (= 0.4.7)
+  guard (= 2.13.0)
+  guard-minitest (= 2.4.4)
   jiffy!
-  minitest
-  rake
+  minitest (= 5.3.3)
+  rake (= 10.3.2)
 
 BUNDLED WITH
    1.10.6
