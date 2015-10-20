@@ -306,11 +306,7 @@ describe Jiffy do
   end
 
   describe "#initialize" do
-    it "should not raise an error when :in is an instance of String" do
-      Jiffy.new(in: __FILE__)
-    end
-
-    it "should not raise en error when :in responds to :readpartial" do
+    it "should not raise en error when :in respond to :readpartial" do
       class Bar
         def readpartial(*); end
       end
@@ -318,7 +314,7 @@ describe Jiffy do
       Jiffy.new(in: Bar.new)
     end
 
-    it "should raise an error when :in is neither an instance of Strirng nor responds to :readpartial" do
+    it "should raise an error when :in doesn't respond to :readpartial" do
       class Foo; end
 
       assert_raises ArgumentError do

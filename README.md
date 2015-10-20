@@ -45,12 +45,6 @@ Any IO object that responds to `readpartial` can be used as an input source.
 Jiffy.new(in: File.open("some.json"))
 ```
 
-One can also chose to specify a file path instead of an IO object as input source.
-
-```ruby
-Jiffy.new(in: "some.json")
-```
-
 `Jiffy#format` can be used to format the input source instead of just tokenizing it.
 
 ```ruby

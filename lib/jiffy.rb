@@ -15,15 +15,11 @@ class Jiffy
   class UnexpectedEndError < StandardError; end
 
   def initialize(options = {})
-    if options[:in].is_a?(String)
-      @io = File.open(options[:in])
-    elsif options[:in].respond_to?(:readpartial)
-      @io = options[:in]
-    else
+    unless options[:in].respond_to?(:readpartial)
       raise ArgumentError, "Invalid input source"
     end
 
-    @data = ArrayMimickingIO.new(@io)
+    @data = ArrayMimickingIO.new(options[:in])
 
     @err = options[:err] || $stdout
 
