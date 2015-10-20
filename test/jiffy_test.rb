@@ -347,7 +347,7 @@ describe Jiffy do
 
       Jiffy.new(in: example).cl_format(err: err, outputter: DummyOutputter.new)
 
-      assert_equal "", err.string
+      assert_empty err.string
     end
 
     it ":stdout should end with a newline upon valid input" do
