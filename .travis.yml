@@ -16,5 +16,6 @@ rvm:
   - 2.2.2
   - 2.2.3
   - 2.2.4
+before_install: gem update bundler # To use 1.10.0 or later. See: https://github.com/bundler/bundler/issues/3558
 script:
   - bundle exec rake test
